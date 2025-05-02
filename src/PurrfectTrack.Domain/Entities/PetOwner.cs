@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PurrfectTrack.Domain.Entities;
+﻿namespace PurrfectTrack.Domain.Entities;
 
 public class PetOwner : Entity<Guid>
 {
