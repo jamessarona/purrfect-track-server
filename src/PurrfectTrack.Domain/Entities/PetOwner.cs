@@ -1,0 +1,26 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PurrfectTrack.Domain.Entities;
+
+public class PetOwner : Entity<Guid>
+{
+    [Required]
+    public string FirstName { get; set; }
+    [Required]
+    public string LastName { get; set; }
+    [Required]
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Address { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public string Gender { get; set; }
+
+    private readonly List<Pet> _pets = new();
+    public IReadOnlyList<Pet> Pets => _pets.AsReadOnly();
+
+    public int NumberOfPets
+    {
+        get => Pets.Count;
+        private set { }
+    }
+}
