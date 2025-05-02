@@ -37,8 +37,48 @@ public class PetOwner : Entity<Guid>
         DateOfBirth = dateOfBirth;
         Gender = gender;
     }
+    public void CreatePet(Guid petOwnerId, string name, string? species = null, string? breed = null,
+        string? gender = null, DateTime? dateOfBirth = null, float? weight = null,
+        string? color = null, bool? isNeutered = null)
     {
-        get => Pets.Count;
-        private set { }
+        var pet = new Pet(
+            petOwnerId,
+            name,
+            species,
+            breed,
+            gender,
+            dateOfBirth,
+            weight,
+            color,
+            isNeutered);
+
+        _pets.Add(pet);
+    }
+
+    public void UpdatePet(Guid petId, string? name = null, string? species = null, string? breed = null,
+        string? gender = null, DateTime? dateOfBirth = null, float? weight = null,
+        string? color = null, bool? isNeutered = null)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+        if (pet is null)
+            throw new InvalidOperationException("Pet not found.");
+
+        if (!string.IsNullOrWhiteSpace(name)) pet.Name = name;
+        if (!string.IsNullOrWhiteSpace(species)) pet.Species = species;
+        if (!string.IsNullOrWhiteSpace(breed)) pet.Breed = breed;
+        if (!string.IsNullOrWhiteSpace(gender)) pet.Gender = gender;
+        if (dateOfBirth.HasValue) pet.DateOfBirth = dateOfBirth;
+        if (weight.HasValue) pet.Weight = weight;
+        if (!string.IsNullOrWhiteSpace(color)) pet.Color = color;
+        if (isNeutered.HasValue) pet.IsNeutered = isNeutered;
+    }
+
+    public void DeletePet(Guid petId)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+        if (pet is null)
+            throw new InvalidOperationException("Pet not found.");
+
+        _pets.Remove(pet);
     }
 }
