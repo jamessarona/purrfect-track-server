@@ -1,0 +1,6 @@
+services:
+  purrfecttrack.api:
+    image: ${DOCKER_REGISTRY-}purrfecttrackapi
+    build:
+      context: .
+      dockerfile: PurrfectTrack.Api/Dockerfile

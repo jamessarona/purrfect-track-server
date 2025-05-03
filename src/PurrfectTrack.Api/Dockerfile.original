@@ -13,10 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["PurrfectTrack.Api/PurrfectTrack.Api.csproj", "PurrfectTrack.Api/"]
-COPY ["PurrfectTrack.Application/PurrfectTrack.Application.csproj", "PurrfectTrack.Application/"]
-COPY ["PurrfectTrack.Domain/PurrfectTrack.Domain.csproj", "PurrfectTrack.Domain/"]
-COPY ["PurrfectTrack.Shared/PurrfectTrack.Shared.csproj", "PurrfectTrack.Shared/"]
-COPY ["PurrfectTrack.Infrastructure/PurrfectTrack.Infrastructure.csproj", "PurrfectTrack.Infrastructure/"]
 RUN dotnet restore "./PurrfectTrack.Api/PurrfectTrack.Api.csproj"
 COPY . .
 WORKDIR "/src/PurrfectTrack.Api"
