@@ -25,5 +25,5 @@ app.Run();
 
 
 // Run in Package Manager Console for Manual Migration Command
-// Add-Migration InitialCreate -OutputDir Data/Migrations -Project Ordering.Infrastructure -StartupProject Ordering.API
+// Add-Migration InitialCreate -OutputDir Data/Migrations -Project PurrfectTrack.Infrastructure -StartupProject PurrfectTrack.Api
 // Update-Database

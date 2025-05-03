@@ -16,6 +16,8 @@ public class Pet : Entity<Guid>
     public string? Color { get; set; }
     public bool? IsNeutered { get; set; }
 
+    public PetOwner PetOwner { get; set; } = default!;
+
     protected Pet() { }
 
     public Pet(Guid petOwnerId, string name, string? species = null, string? breed = null, string? gender = null,
