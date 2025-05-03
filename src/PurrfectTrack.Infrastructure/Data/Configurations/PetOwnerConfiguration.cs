@@ -9,14 +9,18 @@ public class PetOwnerConfiguration : IEntityTypeConfiguration<PetOwner>
 {
     public void Configure(EntityTypeBuilder<PetOwner> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder.HasKey(po => po.Id);
 
-        builder.HasMany(o => o.Pets)
-            .WithOne()
-            .HasForeignKey(oi => oi.PetOwnerId);
+        builder.Property(po => po.FirstName)
+               .HasMaxLength(50)
+               .IsRequired();
 
-        builder.Property(p => p.FirstName).HasMaxLength(50).IsRequired();
-        builder.Property(p => p.LastName).HasMaxLength(50).IsRequired();
-        builder.Property(p => p.Email).HasMaxLength(50).IsRequired();
+        builder.Property(po => po.LastName)
+               .HasMaxLength(50)
+               .IsRequired();
+
+        builder.Property(po => po.Email)
+               .HasMaxLength(50)
+               .IsRequired();
     }
 }

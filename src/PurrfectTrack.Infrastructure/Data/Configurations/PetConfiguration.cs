@@ -9,11 +9,15 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
     public void Configure(EntityTypeBuilder<Pet> builder)
     {
-        builder.HasKey(o => o.Id);
+        builder.HasKey(p => p.Id);
 
-        builder.HasOne<Pet>()
-                .WithMany()
-                .HasForeignKey(oi => oi.PetOwnerId);
-        builder.Property(oi => oi.Name).HasMaxLength(50).IsRequired();
+        builder.Property(p => p.Name)
+               .HasMaxLength(50)
+               .IsRequired();
+
+        builder.HasOne(p => p.PetOwner)
+               .WithMany(po => po.Pets)
+               .HasForeignKey(p => p.PetOwnerId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }
