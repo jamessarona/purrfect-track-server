@@ -13,7 +13,7 @@ public class PetService
     public Pet CreatePet(Guid ownerId, string name)
     {
         var pet = new Pet(ownerId, name);
-        pet.SetCreated(_auditService.GetCurrentUser());
+        //pet.SetCreated(_auditService.GetCurrentUser());
 
         // Save to DB (via repository, not shown here)
         return pet;
@@ -22,7 +22,7 @@ public class PetService
     public void UpdatePet(Pet pet, string newName)
     {
         //pet.UpdateName(newName);
-        pet.SetModified(_auditService.GetCurrentUser());
+        //pet.SetModified(_auditService.GetCurrentUser());
 
         // Save to DB (via repository, not shown here)
     }

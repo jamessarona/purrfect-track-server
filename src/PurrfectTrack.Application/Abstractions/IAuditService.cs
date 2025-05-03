@@ -2,5 +2,5 @@
 
 public interface IAuditService
 {
-    string GetCurrentUser(); // Method to get the current user, e.g., from HTTP context
+    string GetCurrentUser();
 }
