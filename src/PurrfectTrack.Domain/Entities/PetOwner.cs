@@ -16,10 +16,9 @@ public class PetOwner : Entity<Guid>
     public DateTime? DateOfBirth { get; set; }
     public string? Gender { get; set; }
 
-    private readonly List<Pet> _pets = new();
-    public IReadOnlyList<Pet> Pets => _pets.AsReadOnly();
+    public List<Pet> Pets { get; private set; } = new();
 
-    public int NumberOfPets => _pets.Count;
+    public int NumberOfPets => Pets.Count;
 
     protected PetOwner() { }
 
@@ -50,14 +49,14 @@ public class PetOwner : Entity<Guid>
             color,
             isNeutered);
 
-        _pets.Add(pet);
+        Pets.Add(pet);
     }
 
     public void UpdatePet(Guid petId, string? name = null, string? species = null, string? breed = null,
         string? gender = null, DateTime? dateOfBirth = null, float? weight = null,
         string? color = null, bool? isNeutered = null)
     {
-        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+        var pet = Pets.FirstOrDefault(p => p.Id == petId);
         if (pet is null)
             throw new InvalidOperationException("Pet not found.");
 
@@ -73,10 +72,10 @@ public class PetOwner : Entity<Guid>
 
     public void DeletePet(Guid petId)
     {
-        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+        var pet = Pets.FirstOrDefault(p => p.Id == petId);
         if (pet is null)
             throw new InvalidOperationException("Pet not found.");
 
-        _pets.Remove(pet);
+        Pets.Remove(pet);
     }
 }
