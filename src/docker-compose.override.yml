@@ -1,12 +1,24 @@
 services:
+  purrfecttrackdb:
+    container_name: purrfecttrackdb
+    environment:
+      - ACCEPT_EULA=Y 
+      - SA_PASSWORD=M@st3rk3y
+    restart: always
+    ports:
+      - "1433:1433"
+
   purrfecttrack.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=purrfecttrackdb;Database=PurrfectTrackDb;User Id=sa;Password=M@st3rk3y;Encrypt=False;TrustServerCertificate=True
+    depends_on:
+      - purrfecttrackdb
     ports:
-      - "8080"
-      - "8081"
+      - "6010:8080"
+      - "6060:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

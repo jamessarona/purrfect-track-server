@@ -1,6 +1,10 @@
 services:
+  purrfecttrackdb:
+    image: mcr.microsoft.com/mssql/server
+
   purrfecttrack.api:
     image: ${DOCKER_REGISTRY-}purrfecttrackapi
     build:
       context: .
       dockerfile: PurrfectTrack.Api/Dockerfile
+      
