@@ -60,7 +60,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("PetOwnerId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Species")
@@ -71,7 +71,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PetOwnerId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Pets");
                 });
@@ -128,13 +128,13 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("PurrfectTrack.Domain.Entities.Pet", b =>
                 {
-                    b.HasOne("PurrfectTrack.Domain.Entities.PetOwner", "PetOwner")
+                    b.HasOne("PurrfectTrack.Domain.Entities.PetOwner", "Owner")
                         .WithMany("Pets")
-                        .HasForeignKey("PetOwnerId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("PetOwner");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("PurrfectTrack.Domain.Entities.PetOwner", b =>
