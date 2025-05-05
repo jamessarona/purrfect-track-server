@@ -1,4 +1,4 @@
-namespace PurrfectTrack.Infrastructure;
+﻿namespace PurrfectTrack.Infrastructure;
 
 public static class DependencyInjection
 {
@@ -8,7 +8,7 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("Database");
 
         services.AddScoped<IAuditService, AuditService>();
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<AuditableEntityInterceptor>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
