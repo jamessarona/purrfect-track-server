@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
+using PurrfectTrack.Application.Services;
 using PurrfectTrack.Shared.Behaviors;
 using System.Reflection;
 
@@ -19,7 +20,7 @@ public static class DependencyInjection
         });
 
         services.AddFeatureManagement();
-
+        
         return services;
     }
 }
