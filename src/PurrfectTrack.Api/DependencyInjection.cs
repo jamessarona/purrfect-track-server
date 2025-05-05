@@ -1,5 +1,4 @@
-﻿using Carter;
-using HealthChecks.UI.Client;
+﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using PurrfectTrack.Application.Mappings;
 using PurrfectTrack.Shared.Exceptions.Handler;
@@ -12,8 +11,6 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
-        services.AddCarter();
-
         services.AddExceptionHandler<CustomExceptionHandler>();
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("Database")!);
@@ -23,8 +20,6 @@ public static class DependencyInjection
 
     public static WebApplication UseApiServices(this WebApplication app)
     {
-        app.MapCarter();
-
         app.UseExceptionHandler(options => { });
         app.UseHealthChecks("/health",
             new HealthCheckOptions
