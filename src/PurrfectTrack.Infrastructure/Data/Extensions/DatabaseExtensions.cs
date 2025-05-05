@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace PurrfectTrack.Infrastructure.Data.Extensions;
+﻿namespace PurrfectTrack.Infrastructure.Data.Extensions;
 
 
 public static class DatabaseExtensions

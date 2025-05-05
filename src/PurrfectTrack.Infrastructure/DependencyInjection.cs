@@ -1,13 +1,3 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using PurrfectTrack.Application.Abstractions;
-using PurrfectTrack.Application.Data;
-using PurrfectTrack.Application.Services;
-using PurrfectTrack.Infrastructure.Data;
-using PurrfectTrack.Infrastructure.Interceptors;
-using Microsoft.EntityFrameworkCore;
-
 namespace PurrfectTrack.Infrastructure;
 
 public static class DependencyInjection

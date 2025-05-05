@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using PurrfectTrack.Application.Abstractions;
-using PurrfectTrack.Domain.Abstractions;
-using PurrfectTrack.Infrastructure.Extensions;
-
-namespace PurrfectTrack.Infrastructure.Interceptors;
+﻿namespace PurrfectTrack.Infrastructure.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {

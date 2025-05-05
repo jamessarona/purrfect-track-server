@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
-
-namespace PurrfectTrack.Infrastructure.Extensions;
+﻿namespace PurrfectTrack.Infrastructure.Extensions;
 public static class EntityEntryExtensions
 {
     public static bool HasChangedOwnedEntities(this EntityEntry entry) =>

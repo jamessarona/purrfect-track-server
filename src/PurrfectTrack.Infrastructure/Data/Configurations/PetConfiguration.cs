@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PurrfectTrack.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace PurrfectTrack.Infrastructure.Data.Configurations;
+﻿namespace PurrfectTrack.Infrastructure.Data.Configurations;
 
 public class PetConfiguration : IEntityTypeConfiguration<Pet>
 {
@@ -15,9 +10,9 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                .HasMaxLength(50)
                .IsRequired();
 
-        builder.HasOne(p => p.PetOwner)
+        builder.HasOne(p => p.Owner)
                .WithMany(po => po.Pets)
-               .HasForeignKey(p => p.PetOwnerId)
+               .HasForeignKey(p => p.OwnerId)
                .OnDelete(DeleteBehavior.Restrict);
     }
 }

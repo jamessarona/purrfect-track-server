@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using PurrfectTrack.Application.Abstractions;
-
+﻿
 namespace PurrfectTrack.Infrastructure.Services;
 
 public class AuditService : IAuditService

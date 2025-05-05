@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PurrfectTrack.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace PurrfectTrack.Infrastructure.Data.Configurations;
+﻿namespace PurrfectTrack.Infrastructure.Data.Configurations;
 
 public class PetOwnerConfiguration : IEntityTypeConfiguration<PetOwner>
 {
