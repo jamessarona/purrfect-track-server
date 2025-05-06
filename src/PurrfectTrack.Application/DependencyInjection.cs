@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
-using PurrfectTrack.Application.Services;
 using PurrfectTrack.Shared.Behaviors;
 using System.Reflection;
 
@@ -19,8 +19,9 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFeatureManagement();
-        
+
         return services;
     }
 }
