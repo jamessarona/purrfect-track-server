@@ -62,7 +62,7 @@ public class PetsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetPetById(Guid id)
     {
         var query = new GetPetByIdQuery(id);
