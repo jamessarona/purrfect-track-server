@@ -10,7 +10,6 @@ public class MappingProfile : Profile
         CreateMap<Pet, PetModel>();
         CreateMap<PetModel, Pet>();
 
-        //PetOwner
-        //etc.
+        CreateMap<PetOwner, PetOwnerModel>();
     }
 }
