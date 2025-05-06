@@ -14,18 +14,17 @@ public class CreatePetHandler
 
     public async Task<CreatePetResult> Handle(CreatePetCommand command, CancellationToken cancellationToken)
     {
-        var owner = await dbContext.PetOwners
-            .Include(o => o.Pets)
-            .FirstOrDefaultAsync(o => o.Id == command.OwnerId, cancellationToken);
+        var ownerExists = await dbContext.PetOwners
+        .AnyAsync(o => o.Id == command.PetOwnerId, cancellationToken);
 
-        if (owner is null)
-            throw new PetOwnerNotFoundException(command.OwnerId);
+        if (!ownerExists)
+            throw new PetOwnerNotFoundException(command.PetOwnerId);
 
-        owner.CreatePet(
-            command.OwnerId,
+        var newPet = new Pet(
+            command.PetOwnerId,
             command.Name,
-            command.Breed,
             command.Species,
+            command.Breed,
             command.Gender,
             command.DateOfBirth,
             command.Weight,
@@ -33,12 +32,10 @@ public class CreatePetHandler
             command.IsNeutered
         );
 
+        dbContext.Pets.Add(newPet);
+
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var createdPet = owner.Pets.Last();
-        if (createdPet == null)
-            throw new Exception("Failed to create a pet.");
-
-        return new CreatePetResult(createdPet.Id);
+        return new CreatePetResult(newPet.Id);
     }
 }
