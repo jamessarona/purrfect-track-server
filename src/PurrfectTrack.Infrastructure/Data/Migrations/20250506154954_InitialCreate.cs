@@ -38,7 +38,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PetOwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Species = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Breed = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -56,17 +56,17 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pets_PetOwners_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_Pets_PetOwners_PetOwnerId",
+                        column: x => x.PetOwnerId,
                         principalTable: "PetOwners",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_OwnerId",
+                name: "IX_Pets_PetOwnerId",
                 table: "Pets",
-                column: "OwnerId");
+                column: "PetOwnerId");
         }
 
         /// <inheritdoc />
