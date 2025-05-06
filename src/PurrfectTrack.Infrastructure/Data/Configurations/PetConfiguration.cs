@@ -10,9 +10,9 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                .HasMaxLength(50)
                .IsRequired();
 
-        builder.HasOne(p => p.Owner)
+        builder.HasOne(p => p.PetOwner)
                .WithMany(po => po.Pets)
-               .HasForeignKey(p => p.OwnerId)
+               .HasForeignKey(p => p.PetOwnerId)
                .OnDelete(DeleteBehavior.Restrict);
     }
 }
