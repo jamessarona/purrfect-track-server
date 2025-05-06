@@ -1,11 +1,8 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PurrfectTrack.Application.Data;
 using PurrfectTrack.Application.Exceptions;
 using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Shared.CQRS;
-using PurrfectTrack.Shared.Exceptions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PurrfectTrack.Application.Pets.Commands.CreatePet;
 
@@ -22,7 +19,7 @@ public class CreatePetHandler
             .FirstOrDefaultAsync(o => o.Id == command.OwnerId, cancellationToken);
 
         if (owner is null)
-            throw new OwnerNotFoundException(command.OwnerId);
+            throw new PetOwnerNotFoundException(command.OwnerId);
 
         owner.CreatePet(
             command.OwnerId,
