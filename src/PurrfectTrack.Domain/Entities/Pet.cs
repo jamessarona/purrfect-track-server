@@ -3,7 +3,7 @@
 public class Pet : Entity<Guid>
 {
     [Required]
-    public Guid OwnerId { get; set; }
+    public Guid PetOwnerId { get; set; }
 
     [Required]
     public string Name { get; set; } = default!;
@@ -16,15 +16,15 @@ public class Pet : Entity<Guid>
     public string? Color { get; set; }
     public bool? IsNeutered { get; set; }
 
-    public PetOwner Owner { get; set; } = default!;
+    public PetOwner PetOwner { get; set; } = default!;
 
     protected Pet() { }
 
-    public Pet(Guid ownerId, string name, string? species = null, string? breed = null, string? gender = null,
+    public Pet(Guid petOwnerId, string name, string? species = null, string? breed = null, string? gender = null,
         DateTime? dateOfBirth = null, float? weight = null, string? color = null, bool? isNeutered = null)
     {
         Id = Guid.NewGuid();
-        OwnerId = ownerId;
+        PetOwnerId = petOwnerId;
         Name = name;
         Species = species;
         Breed = breed;

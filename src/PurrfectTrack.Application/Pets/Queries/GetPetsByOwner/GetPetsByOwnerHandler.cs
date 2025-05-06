@@ -17,7 +17,7 @@ public class GetPetsByOwnerHandler
     public async Task<GetPetsByOwnerResult> Handle(GetPetsByOwnerQuery query, CancellationToken cancellationToken)
     {
         var pets = await dbContext.Pets
-            .Where(p => p.OwnerId == query.OwnerId)
+            .Where(p => p.PetOwnerId == query.OwnerId)
             .ProjectTo<PetModel>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 

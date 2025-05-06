@@ -15,14 +15,14 @@ public class UpdatePetHandler
     public async Task<UpdatePetResult> Handle(UpdatePetCommand command, CancellationToken cancellationToken)
     {
         var pet = await dbContext.Pets
-            .Include(p => p.Owner)
+            .Include(p => p.PetOwner)
             .FirstOrDefaultAsync(p => p.Id == command.Id, cancellationToken);
 
         if (pet is null)
             throw new PetNotFoundException(command.Id);
 
-        if (pet.OwnerId != command.OwnerId)
-            throw new InvalidOperationException("The Pet does not belong to the specified Owner.");
+        if (pet.PetOwnerId != command.PetOwnerId)
+            throw new InvalidOperationException("The Pet does not belong to the specified Pet Owner.");
 
         pet.Name = command.Name ?? pet.Name;
         pet.Species = command.Species ?? pet.Species;

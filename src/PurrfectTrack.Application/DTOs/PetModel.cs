@@ -3,7 +3,7 @@
 public class PetModel
 {
     public Guid Id { get; set; }
-    public Guid OwnerId { get; set; }
+    public Guid PetOwnerId { get; set; }
     public string Name { get; set; } = default!;
     public string? Species { get; set; }
     public string? Breed { get; set; }
