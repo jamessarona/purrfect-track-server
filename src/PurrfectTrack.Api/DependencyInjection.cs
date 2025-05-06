@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using PurrfectTrack.Application.Mappings;
 using PurrfectTrack.Shared.Exceptions.Handler;
+using System.Diagnostics;
 
 namespace PurrfectTrack.Api;
 
@@ -19,12 +20,15 @@ public static class DependencyInjection
         services.AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("Database")!);
 
+        var versionInfo = FileVersionInfo.GetVersionInfo(typeof(DependencyInjection).Assembly.Location);
+        var fileVersion = versionInfo.FileVersion ?? "v1";
+
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "PurrfectTrack API",
-                Version = "v1"
+                Version = fileVersion
             });
         });
 
