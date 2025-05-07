@@ -3,7 +3,7 @@ using PurrfectTrack.Shared.CQRS;
 
 namespace PurrfectTrack.Application.PetOwners.Commands.UpdatePetOwner;
 
-public record UpdatePetOwnerCommand(Guid Id, string FirstName, string LastName, string Email, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender)
+public record UpdatePetOwnerCommand(Guid Id, Guid UserId, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender)
     : ICommand<UpdatePetOwnerResult>;
 
 public record UpdatePetOwnerResult(Guid Id);
@@ -16,8 +16,7 @@ public class UpdatePetOwnerCommandValidator : AbstractValidator<UpdatePetOwnerCo
             .NotEmpty().WithMessage("Firstname is required");
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("Lastname is required");
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Email is required")
-            .EmailAddress().WithMessage("Invalid email format");
+        RuleFor(x => x.UserId)
+            .NotEmpty().WithMessage("UserId is required");
     }
 }

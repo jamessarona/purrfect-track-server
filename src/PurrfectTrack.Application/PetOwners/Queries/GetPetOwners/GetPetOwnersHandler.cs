@@ -16,7 +16,8 @@ public class GetPetOwnersHandler
 
     public async Task<GetPetOwnersResult> Handle(GetPetOwnersQuery query, CancellationToken cancellationToken)
     {
-        var petOwners = await dbContext.PetOwners
+        var petOwners = await dbContext.PetOwners 
+                .Include(po => po.User)
             .Include(p => p.Pets)
             .ProjectTo<PetOwnerModel>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);

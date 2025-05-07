@@ -1,4 +1,6 @@
-﻿using PurrfectTrack.Application.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PurrfectTrack.Application.Data;
+using PurrfectTrack.Application.Exceptions;
 using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Shared.CQRS;
 
@@ -12,10 +14,16 @@ public class CreatePetOwnerHandler
 
     public async Task<CreatePetOwnerResult> Handle(CreatePetOwnerCommand command, CancellationToken cancellationToken)
     {
+        var user = await dbContext.Users
+            .FirstOrDefaultAsync(u => u.Id == command.UserId, cancellationToken);
+
+        if (user == null)
+            throw new UserNotFoundException(command.UserId);
+
         var petOwner = new PetOwner(
+            command.UserId,
             command.FirstName,
             command.LastName,
-            command.Email,
             command.PhoneNumber,
             command.Address,
             command.DateOfBirth,

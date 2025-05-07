@@ -17,6 +17,7 @@ public class GetPetOwnerByIdHandler
     public async Task<GetPetOwnerByIdResult> Handle(GetPetOwnerByIdQuery query, CancellationToken cancellationToken)
     {
         var petOwner = await dbContext.PetOwners
+            .Include(p => p.User)
             .Include(p => p.Pets)
             .SingleOrDefaultAsync(p => p.Id == query.Id, cancellationToken);
 
@@ -24,6 +25,7 @@ public class GetPetOwnerByIdHandler
             throw new PetOwnerNotFoundException(query.Id);
 
         var petOwnerModel = mapper.Map<PetOwnerModel>(petOwner);
+
 
         return new GetPetOwnerByIdResult(petOwnerModel);
     }

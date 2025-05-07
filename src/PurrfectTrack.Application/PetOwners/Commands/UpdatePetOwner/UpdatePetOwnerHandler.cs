@@ -22,7 +22,6 @@ public class UpdatePetOwnerHandler
 
         petOwner.FirstName = command.FirstName;
         petOwner.LastName = command.LastName;
-        petOwner.Email = command.Email;
         petOwner.PhoneNumber = command.PhoneNumber ?? petOwner.PhoneNumber;
         petOwner.Address = command.Address ?? petOwner.Address;
         petOwner.DateOfBirth = command.DateOfBirth ?? petOwner.DateOfBirth;

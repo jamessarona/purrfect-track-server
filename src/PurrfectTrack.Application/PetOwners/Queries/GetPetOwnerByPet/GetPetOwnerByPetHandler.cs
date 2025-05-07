@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using PurrfectTrack.Application.Data;
 using PurrfectTrack.Application.DTOs;
@@ -18,20 +19,13 @@ public class GetPetOwnerByPetHandler
     {
         var petOwner = await dbContext.PetOwners
             .Where(po => po.Pets.Any(p => p.Id == query.PetId))
-            .Select(po => new
-            {
-                PetOwner = po,
-                Pets = po.Pets.Where(p => p.Id == query.PetId).ToList()
-            })
+            .Include(po => po.Pets)
+            .ProjectTo<PetOwnerModel>(mapper.ConfigurationProvider)  
             .FirstOrDefaultAsync(cancellationToken);
 
         if (petOwner is null)
             throw new PetOwnerNotFoundException(query.PetId);
 
-        var petOwnerModel = mapper.Map<PetOwnerModel>(petOwner.PetOwner);
-
-        petOwnerModel.Pets = mapper.Map<List<PetModel>>(petOwner.Pets);
-
-        return new GetPetOwnerByPetResult(petOwnerModel);
+        return new GetPetOwnerByPetResult(petOwner);
     }
 }
