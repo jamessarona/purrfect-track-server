@@ -19,8 +19,9 @@ public class GetPetOwnerByPetHandler
     {
         var petOwner = await dbContext.PetOwners
             .Where(po => po.Pets.Any(p => p.Id == query.PetId))
+            .Include(po => po.User)
             .Include(po => po.Pets)
-            .ProjectTo<PetOwnerModel>(mapper.ConfigurationProvider)  
+            .ProjectTo<PetOwnerModel>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
         if (petOwner is null)

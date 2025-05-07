@@ -15,7 +15,6 @@ public class UpdatePetHandler
     public async Task<UpdatePetResult> Handle(UpdatePetCommand command, CancellationToken cancellationToken)
     {
         var pet = await dbContext.Pets
-            .Include(p => p.PetOwner)
             .FirstOrDefaultAsync(p => p.Id == command.Id, cancellationToken);
 
         if (pet is null)

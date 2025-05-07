@@ -26,7 +26,6 @@ public class GetPetOwnerByIdHandler
 
         var petOwnerModel = mapper.Map<PetOwnerModel>(petOwner);
 
-
         return new GetPetOwnerByIdResult(petOwnerModel);
     }
 }

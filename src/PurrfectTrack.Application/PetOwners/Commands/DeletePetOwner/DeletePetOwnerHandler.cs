@@ -20,6 +20,7 @@ public class DeletePetOwnerHandler
             return new DeletePetOwnerResult(false);
 
         dbContext.PetOwners.Remove(petOwner);
+
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new DeletePetOwnerResult(true);

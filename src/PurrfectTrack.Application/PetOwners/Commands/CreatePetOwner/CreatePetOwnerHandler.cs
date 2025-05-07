@@ -33,7 +33,6 @@ public class CreatePetOwnerHandler
 
         await dbContext.SaveChangesAsync(cancellationToken);
 
-
         return new CreatePetOwnerResult(petOwner.Id);
     }
 }

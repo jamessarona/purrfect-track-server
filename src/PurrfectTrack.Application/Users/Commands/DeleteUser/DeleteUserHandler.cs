@@ -15,14 +15,16 @@ public class DeleteUserHandler
     public async Task<DeleteUserResult> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
     {
         var user = await dbContext.Users
-            .Include(u => u.PetOwnerProfile) 
             .FirstOrDefaultAsync(u => u.Id == command.Id, cancellationToken);
 
         if (user is null)
-            throw new UserNotFoundException(command.Id); 
+            throw new UserNotFoundException(command.Id);
 
-        if (user.PetOwnerProfile != null)
-            dbContext.PetOwners.Remove(user.PetOwnerProfile);
+        var petOwner = await dbContext.PetOwners
+            .FirstOrDefaultAsync(po => po.UserId == user.Id, cancellationToken);
+
+        if (petOwner != null)
+            dbContext.PetOwners.Remove(petOwner);
 
         dbContext.Users.Remove(user);
 

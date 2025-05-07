@@ -17,7 +17,6 @@ public class GetPetByIdHandler
     public async Task<GetPetByIdResult> Handle(GetPetByIdQuery query, CancellationToken cancellationToken)
     {
         var pet = await dbContext.Pets
-            .Include(p => p.PetOwner)
             .FirstOrDefaultAsync(p => p.Id == query.PetId, cancellationToken);
 
         if (pet is null)

@@ -25,7 +25,6 @@ public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentU
         var currentUserId = GetCurrentUserId();
 
         var user = await dbContext.Users
-            .Include(u => u.PetOwnerProfile)
             .FirstOrDefaultAsync(u => u.Id == currentUserId, cancellationToken);
 
         if (user == null)

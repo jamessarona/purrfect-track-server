@@ -12,7 +12,7 @@ using PurrfectTrack.Infrastructure.Data;
 namespace PurrfectTrack.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250507071953_InitialCreate")]
+    [Migration("20250507084527_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

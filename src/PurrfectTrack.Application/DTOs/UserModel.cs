@@ -12,5 +12,4 @@ public class UserModel
 
     public UserRole Role { get; set; }
     public bool IsActive { get; set; } = true;
-    public PetOwnerModel? PetOwnerProfile { get; set; }
 }

@@ -17,7 +17,6 @@ public class GetUserByIdHandler
     public async Task<GetUserByIdResult> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await dbContext.Users
-            .Include(u => u.PetOwnerProfile)
             .FirstOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
 
         if (user == null)
