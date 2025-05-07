@@ -27,7 +27,6 @@ public class GetUsersByRoleHandler : BaseQueryHandler, IQueryHandler<GetUsersByR
             .Where(u => u.Role.ToString() == role)
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
-            .Include(u => u.PetOwnerProfile)
             .ToListAsync(cancellationToken);
 
         var userModels = mapper.Map<List<UserModel>>(users);
