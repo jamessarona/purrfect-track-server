@@ -3,9 +3,12 @@
 public class PetOwnerModel
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+
+    public UserModel User { get; set; } = new();
+
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
-    public string Email { get; set; } = default!;
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public DateTime? DateOfBirth { get; set; }
