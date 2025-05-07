@@ -18,4 +18,12 @@ public class User : Entity<Guid>
     public DateTime? LockoutEnd { get; set; }
 
     public PetOwner? PetOwnerProfile { get; set; }
+
+    public User(string email, string passwordHash, UserRole role)
+    {
+        Id = Guid.NewGuid();
+        Email = email;
+        PasswordHash = passwordHash;
+        Role = role;
+    }
 }

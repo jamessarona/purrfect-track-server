@@ -14,6 +14,12 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.NumberOfPets, opt => opt.MapFrom(src => src.NumberOfPets))
             .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
 
-        CreateMap<User, UserModel>();
+        CreateMap<PetOwnerModel, PetOwner>();
+
+        CreateMap<User, UserModel>()
+            .ForMember(dest => dest.PetOwnerProfile, opt => opt.MapFrom(src => src.PetOwnerProfile));
+
+        CreateMap<UserModel, User>()
+            .ForMember(dest => dest.PetOwnerProfile, opt => opt.MapFrom(src => src.PetOwnerProfile));
     }
 }
