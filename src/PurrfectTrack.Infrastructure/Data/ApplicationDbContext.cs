@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PurrfectTrack.Application.Data;
-using PurrfectTrack.Domain.Entities;
-using System.Reflection;
-
-namespace PurrfectTrack.Infrastructure.Data;
+﻿namespace PurrfectTrack.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
@@ -15,6 +10,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         _auditableEntityInterceptor = auditableEntityInterceptor;
     }
 
+    public DbSet<User> Users => Set<User>();
     public DbSet<PetOwner> PetOwners => Set<PetOwner>();
     public DbSet<Pet> Pets => Set<Pet>();
 

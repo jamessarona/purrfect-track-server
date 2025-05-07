@@ -10,6 +10,10 @@ public class MappingProfile : Profile
         CreateMap<Pet, PetModel>();
         CreateMap<PetModel, Pet>();
 
-        CreateMap<PetOwner, PetOwnerModel>();
+        CreateMap<PetOwner, PetOwnerModel>()
+            .ForMember(dest => dest.NumberOfPets, opt => opt.MapFrom(src => src.NumberOfPets))
+            .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+
+        CreateMap<User, UserModel>();
     }
 }
