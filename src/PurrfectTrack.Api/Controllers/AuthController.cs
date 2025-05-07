@@ -27,7 +27,6 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public IActionResult Logout()
     {
-        // Just let client delete token — no server-side state
         return Ok("Logged out");
     }
 }
