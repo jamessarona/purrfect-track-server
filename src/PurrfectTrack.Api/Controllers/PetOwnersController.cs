@@ -7,8 +7,6 @@ using PurrfectTrack.Application.PetOwners.Queries.GetPetOwnerById;
 using PurrfectTrack.Application.PetOwners.Queries.GetPetOwnerByPet;
 using PurrfectTrack.Application.PetOwners.Queries.GetPetOwners;
 
-namespace PurrfectTrack.Api.Controllers;
-
 [Route("api/[controller]")]
 [ApiController]
 public class PetOwnersController : ControllerBase
@@ -21,19 +19,19 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePetOwner([FromBody] CreatePetOwnerCommand command)
+    public async Task<IActionResult> CreatePetOwner([FromBody] CreatePetOwnerCommand command, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetPetOwnerById), new { id = result.Id }, result);
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdatePetOwner(Guid id, [FromBody] UpdatePetOwnerCommand command)
+    public async Task<IActionResult> UpdatePetOwner(Guid id, [FromBody] UpdatePetOwnerCommand command, CancellationToken cancellationToken)
     {
         if (id != command.Id)
             return BadRequest("Pet Owner ID mismatch");
 
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
         if (result == null)
             return NotFound();
 
@@ -41,32 +39,31 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeletePetOwner(Guid id)
+    public async Task<IActionResult> DeletePetOwner(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new DeletePetOwnerCommand(id));
-
+        var result = await _mediator.Send(new DeletePetOwnerCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : NotFound();
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetPetOwners()
+    public async Task<IActionResult> GetPetOwners(CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetPetOwnersQuery());
+        var result = await _mediator.Send(new GetPetOwnersQuery(), cancellationToken);
         return Ok(result);
     }
 
     [HttpGet("pet/{petId:guid}")]
-    public async Task<IActionResult> GetPetOwnerByPet(Guid petId)
+    public async Task<IActionResult> GetPetOwnerByPet(Guid petId, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetPetOwnerByPetQuery(petId));
+        var result = await _mediator.Send(new GetPetOwnerByPetQuery(petId), cancellationToken);
         return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPetOwnerById(Guid id)
+    public async Task<IActionResult> GetPetOwnerById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetPetOwnerByIdQuery(id);
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(query, cancellationToken);
 
         if (result == null)
             return NotFound();
