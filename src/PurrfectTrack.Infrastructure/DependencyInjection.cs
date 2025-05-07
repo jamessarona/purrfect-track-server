@@ -16,6 +16,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
 
         return services;
     }

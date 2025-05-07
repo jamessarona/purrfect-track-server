@@ -14,4 +14,6 @@ global using PurrfectTrack.Domain.Entities;
 global using PurrfectTrack.Infrastructure.Extensions;
 global using PurrfectTrack.Infrastructure.Data;
 global using PurrfectTrack.Infrastructure.Interceptors;
+global using PurrfectTrack.Infrastructure.Security;
+global using PurrfectTrack.Shared.Security;
 global using System.Reflection;
