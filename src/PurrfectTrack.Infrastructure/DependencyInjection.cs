@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using PurrfectTrack.Infrastructure.Services;
 
 namespace PurrfectTrack.Infrastructure;
 
@@ -19,8 +18,12 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
         services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+
+        services.AddMemoryCache();
+        services.AddScoped<ICacheService, CacheService>();
 
         services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
