@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using PurrfectTrack.Api;
 using PurrfectTrack.Application;
 using PurrfectTrack.Infrastructure;
@@ -7,6 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
 builder.Services
     .AddApplicationServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration)  
