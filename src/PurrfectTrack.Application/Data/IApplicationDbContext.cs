@@ -6,6 +6,7 @@ public interface IApplicationDbContext
 {
     DbSet<User> Users { get; }
     DbSet<UserSession> UserSessions { get; }
+    DbSet<RefreshToken> RefreshTokens { get; }
     DbSet<PetOwner> PetOwners { get; }
     DbSet<Pet> Pets { get; }
 
