@@ -2,7 +2,8 @@
 
 public enum UserRole
 {
-    Doctor = 1, 
-    VetStaff = 2,
-    PetOwner = 3
+    Administrator,
+    Vet, 
+    VetStaff,
+    PetOwner
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PurrfectTrack.Application.PetOwners.Commands.CreatePetOwner;
 using PurrfectTrack.Application.PetOwners.Commands.DeletePetOwner;
@@ -19,6 +20,7 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreatePetOwner([FromBody] CreatePetOwnerCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -26,6 +28,7 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize(Roles = "Administrator,PetOwner")]
     public async Task<IActionResult> UpdatePetOwner(Guid id, [FromBody] UpdatePetOwnerCommand command, CancellationToken cancellationToken)
     {
         if (id != command.Id)
@@ -39,6 +42,7 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeletePetOwner(Guid id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeletePetOwnerCommand(id), cancellationToken);
@@ -46,6 +50,7 @@ public class PetOwnersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> GetPetOwners(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetPetOwnersQuery(), cancellationToken);

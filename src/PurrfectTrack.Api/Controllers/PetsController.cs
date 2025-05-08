@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PurrfectTrack.Application.Pets.Commands.CreatePet;
 using PurrfectTrack.Application.Pets.Commands.DeletePet;
@@ -19,6 +20,7 @@ public class PetsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrator,PetOwner")]
     public async Task<IActionResult> CreatePet([FromBody] CreatePetCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -39,6 +41,7 @@ public class PetsController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Administrator,PetOwner")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeletePetCommand(id), cancellationToken);
@@ -46,6 +49,7 @@ public class PetsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> GetPets(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetPetsQuery(), cancellationToken);

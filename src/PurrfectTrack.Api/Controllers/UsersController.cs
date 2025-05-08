@@ -26,6 +26,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
@@ -45,6 +46,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteUserCommand(id);
@@ -62,7 +64,6 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("current")]
-    [Authorize]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetCurrentUserQuery(), cancellationToken);
@@ -70,6 +71,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> GetUsers(CancellationToken cancellationToken, [FromQuery] int pageIndex = 0, [FromQuery] int pageSize = 20)
     {
         var query = new GetUsersQuery(new PaginationRequest(pageIndex, pageSize));
@@ -78,6 +80,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("role")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> GetUsersByRole(CancellationToken cancellationToken, [FromQuery] string role, [FromQuery] int pageIndex = 0, [FromQuery] int pageSize = 20)
     {
         var query = new GetUsersByRoleQuery(role, new PaginationRequest(pageIndex, pageSize));
