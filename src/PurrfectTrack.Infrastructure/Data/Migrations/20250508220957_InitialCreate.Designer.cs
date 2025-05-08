@@ -12,7 +12,7 @@ using PurrfectTrack.Infrastructure.Data;
 namespace PurrfectTrack.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250508144742_InitialCreate")]
+    [Migration("20250508220957_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,6 +48,10 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool?>("IsNeutered")
                         .HasColumnType("bit");
@@ -105,6 +109,10 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");

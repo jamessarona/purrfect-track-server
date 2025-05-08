@@ -14,5 +14,9 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                .WithMany(po => po.Pets)
                .HasForeignKey(p => p.PetOwnerId)
                .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(p => p.ImageUrl)
+            .IsRequired(false)
+            .HasMaxLength(500);
     }
 }

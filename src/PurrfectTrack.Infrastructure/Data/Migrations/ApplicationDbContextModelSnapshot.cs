@@ -46,6 +46,10 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<bool?>("IsNeutered")
                         .HasColumnType("bit");
 
@@ -102,6 +106,10 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");

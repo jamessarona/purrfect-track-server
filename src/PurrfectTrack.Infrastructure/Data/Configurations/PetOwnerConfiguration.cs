@@ -28,5 +28,9 @@ public class PetOwnerConfiguration : IEntityTypeConfiguration<PetOwner>
 
         builder.Property(po => po.Address)
             .HasMaxLength(250);
+
+        builder.Property(p => p.ImageUrl)
+            .IsRequired(false)
+            .HasMaxLength(500);
     }
 }
