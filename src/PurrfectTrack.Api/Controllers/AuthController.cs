@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PurrfectTrack.Application.Users.Commands.Login;
 using PurrfectTrack.Application.Users.Commands.Logout;
-using PurrfectTrack.Infrastructure.Data;
+using PurrfectTrack.Application.Users.Commands.RefreshTokenFeature;
 
 namespace PurrfectTrack.Api.Controllers;
 
@@ -37,5 +36,13 @@ public class AuthController : ControllerBase
         await _mediator.Send(logoutCommand);
 
         return Ok("Logged out successfully");
+    }
+
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }
