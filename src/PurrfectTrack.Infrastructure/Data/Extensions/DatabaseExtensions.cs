@@ -26,9 +26,9 @@ public static class DatabaseExtensions
         if (!await context.Users.AnyAsync())
         {
             var user = new User(
-                "james.sarona@xmail.com",
-                passwordHasher.Hash("SamplePassword1234"),
-                UserRole.PetOwner
+                "james@gmail.com",
+                passwordHasher.Hash("M@st3rk3y"),
+                UserRole.Administrator
             );
 
             var petOwner = new PetOwner(
@@ -36,7 +36,7 @@ public static class DatabaseExtensions
                 "James",
                 "Sarona",
                 "09397220078",
-                "San Rafael D.C.",
+                "Davao, Philippines",
                 new DateTime(1998, 09, 27),
                 "Male"
             );
