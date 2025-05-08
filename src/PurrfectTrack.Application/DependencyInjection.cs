@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
+using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Shared.Behaviors;
 using System.Reflection;
 
@@ -21,6 +22,8 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFeatureManagement();
+
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
         return services;
     }
