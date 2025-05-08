@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PurrfectTrack.Application.Data;
 using PurrfectTrack.Application.Utils;
@@ -13,14 +14,17 @@ public class LoginHandler
     private readonly IJwtService _jwtService;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ILogger<LoginHandler> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public LoginHandler(IApplicationDbContext dbContext, IJwtService jwtService, 
-            IPasswordHasher passwordHasher, ILogger<LoginHandler> logger)
+            IPasswordHasher passwordHasher, ILogger<LoginHandler> logger, 
+            IHttpContextAccessor httpContextAccessor)
         : base(dbContext)
     {
         _jwtService = jwtService;
         _passwordHasher = passwordHasher;
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<LoginResult> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -31,7 +35,29 @@ public class LoginHandler
 
         var token = _jwtService.GenerateToken(user.Id, user.Role);
 
-        return new LoginResult(token);
+        var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+        var userAgent = _httpContextAccessor.HttpContext?.Request?.Headers["User-Agent"].ToString();
+
+        if (ip == null) 
+            _logger.LogInformation("IP address could not be retrieved");
+        if (string.IsNullOrEmpty(userAgent)) 
+            _logger.LogInformation("User-Agent header missing");
+
+        var now = DateTime.UtcNow;
+        var session = new UserSession
+        {
+            UserId = user.Id,
+            Token = token,
+            CreatedAt = now,
+            ExpiresAt = now.AddMinutes(60),
+            IpAddress = ip,
+            UserAgent = userAgent
+        };
+
+        dbContext.UserSessions.Add(session);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return new LoginResult(token, session.Id);
     }
 
     private async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)

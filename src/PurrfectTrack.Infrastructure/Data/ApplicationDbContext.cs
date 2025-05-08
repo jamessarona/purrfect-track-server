@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<UserSession> UserSessions => Set<UserSession>();
     public DbSet<PetOwner> PetOwners => Set<PetOwner>();
     public DbSet<Pet> Pets => Set<Pet>();
 
