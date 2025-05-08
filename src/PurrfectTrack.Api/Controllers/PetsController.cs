@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PurrfectTrack.Application.Pets.Commands.CreatePet;
 using PurrfectTrack.Application.Pets.Commands.DeletePet;
 using PurrfectTrack.Application.Pets.Commands.UpdatePet;
+using PurrfectTrack.Application.Pets.Commands.UploadPetImage;
 using PurrfectTrack.Application.Pets.Queries.GetPetById;
 using PurrfectTrack.Application.Pets.Queries.GetPets;
 using PurrfectTrack.Application.Pets.Queries.GetPetsByOwner;
@@ -71,6 +72,19 @@ public class PetsController : ControllerBase
 
         if (result == null)
             return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/upload-image")]
+    [Authorize(Roles = "Administrator,PetOwner")]
+    public async Task<IActionResult> UploadPetImage(Guid id, [FromForm] IFormFile file, CancellationToken cancellationToken)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Image file is required.");
+
+        var command = new UploadPetImageCommand(id, file);
+        var result = await _mediator.Send(command, cancellationToken);
 
         return Ok(result);
     }
