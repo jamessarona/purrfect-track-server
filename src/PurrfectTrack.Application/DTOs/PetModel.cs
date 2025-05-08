@@ -12,4 +12,5 @@ public class PetModel
     public float? Weight { get; set; }
     public string? Color { get; set; }
     public bool? IsNeutered { get; set; }
+    public string? ImageUrl { get; set; }
 }

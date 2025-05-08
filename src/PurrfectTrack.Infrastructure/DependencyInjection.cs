@@ -25,6 +25,8 @@ public static class DependencyInjection
         services.AddMemoryCache();
         services.AddScoped<ICacheService, CacheService>();
 
+        services.AddScoped<IImageStorageService, ImageStorageService>();
+
         services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {

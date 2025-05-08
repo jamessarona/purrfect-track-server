@@ -15,6 +15,7 @@ public class Pet : Entity<Guid>
     public float? Weight { get; set; }
     public string? Color { get; set; }
     public bool? IsNeutered { get; set; }
+    public string? ImageUrl { get; set; }
 
     public PetOwner PetOwner { get; set; } = default!;
 

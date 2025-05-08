@@ -11,6 +11,7 @@ public class PetOwnerModel
     public string? Address { get; set; }
     public DateTime? DateOfBirth { get; set; }
     public string? Gender { get; set; }
+    public string? ImageUrl { get; set; }
 
     public int NumberOfPets { get; set; }
 
