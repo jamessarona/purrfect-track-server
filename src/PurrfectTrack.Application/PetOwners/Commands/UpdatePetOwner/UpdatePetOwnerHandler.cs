@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PurrfectTrack.Application.Abstractions;
 using PurrfectTrack.Application.Data;
 using PurrfectTrack.Application.Exceptions;
 using PurrfectTrack.Application.Utils;
