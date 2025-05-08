@@ -1,9 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PurrfectTrack.Application.Users.Commands.Login;
+using PurrfectTrack.Application.Users.Commands.Logout;
+using PurrfectTrack.Infrastructure.Data;
 
 namespace PurrfectTrack.Api.Controllers;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -25,9 +29,13 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
-        return Ok("Logged out");
+        var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+        var logoutCommand = new LogoutCommand(token);
+        await _mediator.Send(logoutCommand);
+
+        return Ok("Logged out successfully");
     }
 }
-
