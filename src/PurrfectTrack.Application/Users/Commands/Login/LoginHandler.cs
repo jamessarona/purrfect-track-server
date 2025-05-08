@@ -5,6 +5,7 @@ using PurrfectTrack.Application.Data;
 using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Shared.CQRS;
 using PurrfectTrack.Shared.Security;
+using PurrfectTrack.Domain.Entities;
 
 namespace PurrfectTrack.Application.Users.Commands.Login;
 
@@ -15,16 +16,18 @@ public class LoginHandler
     private readonly IPasswordHasher _passwordHasher;
     private readonly ILogger<LoginHandler> _logger;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IRefreshTokenService _refreshTokenService;
 
     public LoginHandler(IApplicationDbContext dbContext, IJwtService jwtService, 
             IPasswordHasher passwordHasher, ILogger<LoginHandler> logger, 
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor, IRefreshTokenService refreshTokenService)
         : base(dbContext)
     {
         _jwtService = jwtService;
         _passwordHasher = passwordHasher;
         _logger = logger;
         _httpContextAccessor = httpContextAccessor;
+        _refreshTokenService = refreshTokenService;
     }
 
     public async Task<LoginResult> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -35,12 +38,14 @@ public class LoginHandler
 
         var token = _jwtService.GenerateToken(user.Id, user.Role);
 
+        var refreshToken = _refreshTokenService.GenerateRefreshToken(); 
+
         var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         var userAgent = _httpContextAccessor.HttpContext?.Request?.Headers["User-Agent"].ToString();
 
-        if (ip == null) 
+        if (ip == null)
             _logger.LogInformation("IP address could not be retrieved");
-        if (string.IsNullOrEmpty(userAgent)) 
+        if (string.IsNullOrEmpty(userAgent))
             _logger.LogInformation("User-Agent header missing");
 
         var now = DateTime.UtcNow;
@@ -57,7 +62,20 @@ public class LoginHandler
         dbContext.UserSessions.Add(session);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new LoginResult(token, session.Id);
+        var refreshTokenEntity = new RefreshToken
+        {
+            UserId = user.Id,
+            Token = refreshToken,
+            CreatedAt = now,
+            ExpiresAt = now.AddDays(7),
+            IpAddress = ip,
+            UserAgent = userAgent
+        };
+
+        dbContext.RefreshTokens.Add(refreshTokenEntity);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return new LoginResult(token, session.Id, refreshToken);
     }
 
     private async Task<User> GetUserByEmailAsync(string email, CancellationToken cancellationToken)

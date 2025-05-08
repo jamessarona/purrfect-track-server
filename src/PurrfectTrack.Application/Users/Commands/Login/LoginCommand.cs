@@ -5,7 +5,7 @@ namespace PurrfectTrack.Application.Users.Commands.Login;
 
 public record LoginCommand(string Email, string Password) : ICommand<LoginResult>;
 
-public record LoginResult(string Token, Guid SessionId);
+public record LoginResult(string Token, Guid SessionId, string RefreshToken);
 
 public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
