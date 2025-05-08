@@ -1,5 +1,4 @@
-﻿
-namespace PurrfectTrack.Infrastructure.Services;
+﻿namespace PurrfectTrack.Infrastructure.Services;
 
 public class AuditService : IAuditService
 {
