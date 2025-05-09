@@ -20,20 +20,42 @@ public class DeletePetOwnerHandler
     public async Task<DeletePetOwnerResult> Handle(DeletePetOwnerCommand command, CancellationToken cancellationToken)
     {
         var petOwner = await dbContext.PetOwners
+            .Include(po => po.User)
             .Include(po => po.Pets)
             .FirstOrDefaultAsync(po => po.Id == command.Id, cancellationToken);
 
         if (petOwner is null)
             return new DeletePetOwnerResult(false);
 
-        dbContext.PetOwners.Remove(petOwner);
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            if (petOwner.Pets is not null)
+            {
+                foreach (var pet in petOwner.Pets)
+                    dbContext.Pets.Remove(pet);
+            }
+                  
+            dbContext.PetOwners.Remove(petOwner);
+            dbContext.Users.Remove(petOwner.User);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw; 
+        }
 
         await _cacheService.RemoveAsync(CacheKeyManager.GetPetOwnersCacheKey());
         await _cacheService.RemoveAsync(CacheKeyManager.GetPetOwnerByIdCacheKey(petOwner.Id));
-        foreach (var pet in petOwner.Pets)
-            await _cacheService.RemoveAsync(CacheKeyManager.GetPetOwnerByPetCacheKey(pet.Id));
+        if (petOwner.Pets is not null)
+        {
+            foreach (var pet in petOwner.Pets)
+                await _cacheService.RemoveAsync(CacheKeyManager.GetPetOwnerByPetCacheKey(pet.Id));
+            
+        }
 
         return new DeletePetOwnerResult(true);
     }
