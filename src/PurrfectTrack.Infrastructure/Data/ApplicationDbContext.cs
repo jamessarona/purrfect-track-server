@@ -1,4 +1,6 @@
-﻿namespace PurrfectTrack.Infrastructure.Data;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+
+namespace PurrfectTrack.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
@@ -15,7 +17,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<PetOwner> PetOwners => Set<PetOwner>();
     public DbSet<Pet> Pets => Set<Pet>();
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
