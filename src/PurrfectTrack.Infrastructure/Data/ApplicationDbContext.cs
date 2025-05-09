@@ -17,6 +17,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<PetOwner> PetOwners => Set<PetOwner>();
     public DbSet<Pet> Pets => Set<Pet>();
+    public DbSet<Vet> Vets => Set<Vet>();
+    public DbSet<VetStaff> VetStaffs => Set<VetStaff>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

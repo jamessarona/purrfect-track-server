@@ -10,6 +10,8 @@ public interface IApplicationDbContext
     DbSet<RefreshToken> RefreshTokens { get; }
     DbSet<PetOwner> PetOwners { get; }
     DbSet<Pet> Pets { get; }
+    DbSet<Vet> Vets { get; }
+    DbSet<VetStaff> VetStaffs { get; }
 
     DatabaseFacade Database { get; }
 
