@@ -17,6 +17,8 @@ public class User : Entity<Guid>
     public int FailedLoginCount { get; set; } = 0;
     public DateTime? LockoutEnd { get; set; }
 
+    public Vet? VetProfile { get; set; }
+    public VetStaff? VetStaffProfile { get; set; }
     public PetOwner? PetOwnerProfile { get; set; }
 
     public User(string email, string passwordHash, UserRole role)
