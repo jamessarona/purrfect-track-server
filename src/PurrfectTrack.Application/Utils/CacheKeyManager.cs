@@ -15,4 +15,7 @@ public static class CacheKeyManager
     public static string GetPetsCacheKey() => "pets";
     public static string GetPetByIdCacheKey(Guid id) => $"pet-{id}";
     public static string GetPetsByOwner(Guid ownerId) => $"petsByPetOwner-{ownerId}";
+
+    public static string GetVetsCacheKey() => "vets";
+    public static string GetVetByIdCacheKey(Guid id) => $"vets-{id}";
 }
