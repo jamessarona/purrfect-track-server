@@ -11,13 +11,13 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PurrfectTrack.Application.Vets.Commands.CreateVet;
 
-public class CreateVerHandler
+public class CreateVetHandler
     : BaseHandler, ICommandHandler<CreateVetCommand, CreateVetResult>
 {
     private readonly ICacheService _cacheService;
     private readonly IPasswordHasher _passwordHasher;
 
-    public CreateVerHandler(IApplicationDbContext dbContext, ICacheService cacheService, IPasswordHasher passwordHasher)
+    public CreateVetHandler(IApplicationDbContext dbContext, ICacheService cacheService, IPasswordHasher passwordHasher)
         : base(dbContext)
     {
         _cacheService = cacheService;
