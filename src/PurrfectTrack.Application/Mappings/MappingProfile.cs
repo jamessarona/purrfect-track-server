@@ -12,14 +12,20 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
             .ReverseMap();
 
+        CreateMap<Contact, ContactModel>();
+
         CreateMap<PetOwner, PetOwnerModel>()
+            .IncludeBase<Contact, ContactModel>()
             .ForMember(dest => dest.NumberOfPets, opt => opt.MapFrom(src => src.Pets.Count))
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
             .ReverseMap();
 
         CreateMap<Pet, PetModel>()
             .ForMember(dest => dest.PetOwnerId, opt => opt.MapFrom(src => src.PetOwnerId));
         CreateMap<PetModel, Pet>()
             .ForMember(dest => dest.PetOwnerId, opt => opt.MapFrom(src => src.PetOwnerId));
+
+        CreateMap<Vet, VetModel>()
+            .IncludeBase<Contact, ContactModel>()
+            .ReverseMap();
     }
 }
