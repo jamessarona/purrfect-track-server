@@ -6,7 +6,7 @@ using PurrfectTrack.Infrastructure.Caching;
 using PurrfectTrack.Shared.CQRS;
 using PurrfectTrack.Shared.Security;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.CreateVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.CreateVetStaff;
 
 public class CreateVetStaffHandler
     : BaseHandler, ICommandHandler<CreateVetStaffCommand, CreateVetStaffResult>

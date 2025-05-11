@@ -5,7 +5,7 @@ using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Infrastructure.Caching;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.UpdateVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.UpdateVetStaff;
 
 public class UpdateVetStaffHandler
     : BaseHandler, ICommandHandler<UpdateVetStaffCommand, UpdateVetStaffResult>

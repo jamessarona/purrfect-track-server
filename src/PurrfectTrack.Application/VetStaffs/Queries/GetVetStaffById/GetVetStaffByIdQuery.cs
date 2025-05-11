@@ -1,7 +1,7 @@
 ﻿using PurrfectTrack.Application.DTOs;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Queries.GetVetById;
+namespace PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffById;
 
 public record GetVetStaffByIdQuery(Guid Id) : IQuery<GetVetStaffByIdResult>;
 

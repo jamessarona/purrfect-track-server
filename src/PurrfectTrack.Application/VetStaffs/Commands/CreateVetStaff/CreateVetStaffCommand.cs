@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.CreateVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.CreateVetStaff;
 
 public record CreateVetStaffCommand(string Email, string Password, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender,
         string? Position, string? Department, DateTime? EmploymentDate)

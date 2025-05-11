@@ -4,7 +4,7 @@ using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Infrastructure.Caching;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.DeleteVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.DeleteVetStaff;
 
 public class DeleteVetStaffHandler
     : BaseHandler, ICommandHandler<DeleteVetStaffCommand, DeleteVetStaffResult>

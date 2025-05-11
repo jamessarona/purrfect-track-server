@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.UpdateVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.UpdateVetStaff;
 
 public record UpdateVetStaffCommand(Guid Id, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender,
         string? Position, string? Department, DateTime? EmploymentDate)

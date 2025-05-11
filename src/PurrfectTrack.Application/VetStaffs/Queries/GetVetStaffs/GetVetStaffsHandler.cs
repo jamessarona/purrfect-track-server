@@ -7,7 +7,7 @@ using PurrfectTrack.Application.Utils;
 using PurrfectTrack.Infrastructure.Caching;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Queries.GetVets;
+namespace PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffs;
 
 public class GetVetStaffsHandler
     : BaseQueryHandler, IQueryHandler<GetVetStaffsQuery, GetVetStaffsResult>

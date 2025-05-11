@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using PurrfectTrack.Shared.CQRS;
 
-namespace PurrfectTrack.Application.VetStaffs.Commands.DeleteVet;
+namespace PurrfectTrack.Application.VetStaffs.Commands.DeleteVetStaff;
 
 public record DeleteVetStaffCommand(Guid Id) : ICommand<DeleteVetStaffResult>;
 
