@@ -10,6 +10,6 @@ public class PetOwnerConfiguration : IEntityTypeConfiguration<PetOwner>
             .WithOne(u => u.PetOwnerProfile)
             .HasForeignKey<PetOwner>(po => po.UserId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

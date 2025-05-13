@@ -18,15 +18,15 @@ class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(200);
 
         builder.Property(u => u.Role)
-            .IsRequired() 
-            .HasMaxLength(50);
+            .HasConversion<string>()
+            .IsRequired();
 
         builder.Property(u => u.IsActive)
             .IsRequired(); 
 
         builder.HasOne(u => u.PetOwnerProfile)
             .WithOne(po => po.User)
-            .HasForeignKey<PetOwner>(po => po.UserId) 
-            .OnDelete(DeleteBehavior.Cascade); 
+            .HasForeignKey<PetOwner>(po => po.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

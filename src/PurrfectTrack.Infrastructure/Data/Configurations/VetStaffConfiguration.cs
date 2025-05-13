@@ -10,7 +10,7 @@ public class VetStaffConfiguration : IEntityTypeConfiguration<VetStaff>
             .WithOne(u => u.VetStaffProfile)
             .HasForeignKey<VetStaff>(po => po.UserId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(p => p.Position)
             .IsRequired(false)

@@ -12,7 +12,7 @@ public class VetConfiguration : IEntityTypeConfiguration<Vet>
             .WithOne(u => u.VetProfile)
             .HasForeignKey<Vet>(po => po.UserId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(p => p.LicenseNumber)
             .IsRequired(false)

@@ -19,6 +19,6 @@ public class UserSessionConfiguration : IEntityTypeConfiguration<UserSession>
         builder.HasOne(us => us.User)
             .WithMany()
             .HasForeignKey(us => us.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
