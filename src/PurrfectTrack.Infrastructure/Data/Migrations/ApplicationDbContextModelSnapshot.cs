@@ -22,6 +22,76 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("PurrfectTrack.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid?>("PetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PetOwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("VetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("VetStaffId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("PetOwnerId");
+
+                    b.HasIndex("VetId");
+
+                    b.HasIndex("VetStaffId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("PurrfectTrack.Domain.Entities.Pet", b =>
                 {
                     b.Property<Guid>("Id")
@@ -234,9 +304,9 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("Role")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -443,6 +513,38 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.ToTable("VetStaffs");
                 });
 
+            modelBuilder.Entity("PurrfectTrack.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("PurrfectTrack.Domain.Entities.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("PurrfectTrack.Domain.Entities.PetOwner", "PetOwner")
+                        .WithMany()
+                        .HasForeignKey("PetOwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PurrfectTrack.Domain.Entities.Vet", "Vet")
+                        .WithMany()
+                        .HasForeignKey("VetId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("PurrfectTrack.Domain.Entities.VetStaff", "VetStaff")
+                        .WithMany()
+                        .HasForeignKey("VetStaffId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Pet");
+
+                    b.Navigation("PetOwner");
+
+                    b.Navigation("Vet");
+
+                    b.Navigation("VetStaff");
+                });
+
             modelBuilder.Entity("PurrfectTrack.Domain.Entities.Pet", b =>
                 {
                     b.HasOne("PurrfectTrack.Domain.Entities.PetOwner", "PetOwner")
@@ -459,7 +561,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.HasOne("PurrfectTrack.Domain.Entities.User", "User")
                         .WithOne("PetOwnerProfile")
                         .HasForeignKey("PurrfectTrack.Domain.Entities.PetOwner", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -481,7 +583,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.HasOne("PurrfectTrack.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -492,7 +594,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.HasOne("PurrfectTrack.Domain.Entities.User", "User")
                         .WithOne("VetProfile")
                         .HasForeignKey("PurrfectTrack.Domain.Entities.Vet", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -503,7 +605,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     b.HasOne("PurrfectTrack.Domain.Entities.User", "User")
                         .WithOne("VetStaffProfile")
                         .HasForeignKey("PurrfectTrack.Domain.Entities.VetStaff", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
