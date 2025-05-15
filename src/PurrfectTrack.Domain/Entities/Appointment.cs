@@ -35,7 +35,7 @@ public class Appointment : Entity<Guid>
     public VetStaff? VetStaff { get; set; }
 
     [Required]
-    public AppointmentStatus Status { get; set; }
+    public AppointmentStatus? Status { get; set; }
     
     public string? Notes { get; set; }
 
@@ -45,7 +45,7 @@ public class Appointment : Entity<Guid>
     protected Appointment() { }
 
     public Appointment(string title, string? description, DateTime startDate, DateTime endDate, string? location, 
-        Guid petOwnerId, Guid petId, Guid vetId, Guid vetStaffId, AppointmentStatus status, string? notes, Guid companyId)
+        Guid petOwnerId, Guid? petId, Guid? vetId, Guid? vetStaffId, AppointmentStatus status, string notes, Guid companyId)
     {
         Id = Guid.NewGuid();
         Title = title;
@@ -57,8 +57,8 @@ public class Appointment : Entity<Guid>
         PetId = petId;
         VetId = vetId;
         VetStaffId = vetStaffId;
+        CompanyId = companyId;
         Status = status;
         Notes = notes;
-        CompanyId = companyId;
     }
 }
