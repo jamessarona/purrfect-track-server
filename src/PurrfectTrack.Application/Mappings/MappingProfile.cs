@@ -27,5 +27,14 @@ public class MappingProfile : Profile
         CreateMap<Vet, VetModel>()
             .IncludeBase<Contact, ContactModel>()
             .ReverseMap();
+
+
+        CreateMap<Appointment, AppointmentModel>();
+        CreateMap<AppointmentModel, Appointment>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.PetOwner, opt => opt.Ignore())
+            .ForMember(dest => dest.Pet, opt => opt.Ignore())
+            .ForMember(dest => dest.Vet, opt => opt.Ignore())
+            .ForMember(dest => dest.VetStaff, opt => opt.Ignore());
     }
 }
