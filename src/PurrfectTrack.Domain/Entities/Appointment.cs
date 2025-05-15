@@ -1,5 +1,4 @@
 ﻿using PurrfectTrack.Domain.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PurrfectTrack.Domain.Entities;
 
