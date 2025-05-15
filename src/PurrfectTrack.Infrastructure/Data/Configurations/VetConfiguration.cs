@@ -38,5 +38,10 @@ public class VetConfiguration : IEntityTypeConfiguration<Vet>
 
         builder.Property(p => p.EmploymentDate)
             .IsRequired(false);
+
+        builder.HasOne(v => v.Company)
+            .WithMany(c => c.Vets)
+            .HasForeignKey(v => v.CompanyId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

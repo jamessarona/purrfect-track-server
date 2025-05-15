@@ -22,5 +22,10 @@ public class VetStaffConfiguration : IEntityTypeConfiguration<VetStaff>
 
         builder.Property(p => p.EmploymentDate)
             .IsRequired(false);
+
+        builder.HasOne(vf => vf.Company)
+            .WithMany(c => c.VetStaffs)
+            .HasForeignKey(vf => vf.CompanyId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }
