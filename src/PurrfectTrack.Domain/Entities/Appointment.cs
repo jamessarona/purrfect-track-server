@@ -39,10 +39,13 @@ public class Appointment : Entity<Guid>
     
     public string? Notes { get; set; }
 
+    public Guid? CompanyId { get; set; }
+    public Company? Company { get; set; } = default!;
+
     protected Appointment() { }
 
     public Appointment(string title, string? description, DateTime startDate, DateTime endDate, string? location, 
-        Guid petOwnerId, Guid petId, Guid vetId, Guid vetStaffId, AppointmentStatus status, string? notes)
+        Guid petOwnerId, Guid petId, Guid vetId, Guid vetStaffId, AppointmentStatus status, string? notes, Guid companyId)
     {
         Id = Guid.NewGuid();
         Title = title;
@@ -56,5 +59,6 @@ public class Appointment : Entity<Guid>
         VetStaffId = vetStaffId;
         Status = status;
         Notes = notes;
+        CompanyId = companyId;
     }
 }

@@ -10,6 +10,9 @@ public class Vet : Contact
     public string? ClinicAddress { get; set; }
     public DateTime? EmploymentDate { get; set; }
 
+    public Guid? CompanyId { get; set; }
+    public Company? Company { get; set; } = default!;
+
     protected Vet() { }
 
     public Vet(Guid userId, string firstName, string lastName,
@@ -18,7 +21,7 @@ public class Vet : Contact
         string? licenseNumber = null, DateTime? licenseExpiryDate = null,
         string? specialization = null, int? yearsOfExperience = null,
         string? clinicName = null, string? clinicAddress = null,
-        DateTime? employmentDate = null)
+        DateTime? employmentDate = null, Guid? companyId = null)
         : base(userId, firstName, lastName, phoneNumber, address, dateOfBirth, gender)
     {
         LicenseNumber = licenseNumber;
@@ -28,5 +31,6 @@ public class Vet : Contact
         ClinicName = clinicName;
         ClinicAddress = clinicAddress;
         EmploymentDate = employmentDate;
+        CompanyId = companyId;
     }
 }
