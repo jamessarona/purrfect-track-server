@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Vet> Vets => Set<Vet>();
     public DbSet<VetStaff> VetStaffs => Set<VetStaff>();
     public DbSet<Appointment> Appointments => Set<Appointment>();
+    public DbSet<Company> Companies => Set<Company>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -13,6 +13,7 @@ public interface IApplicationDbContext
     DbSet<Vet> Vets { get; }
     DbSet<VetStaff> VetStaffs { get; }
     DbSet<Appointment> Appointments { get; }
+    DbSet<Company> Companies { get; }
 
     DatabaseFacade Database { get; }
 
