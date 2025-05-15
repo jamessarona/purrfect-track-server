@@ -28,7 +28,6 @@ public class MappingProfile : Profile
             .IncludeBase<Contact, ContactModel>()
             .ReverseMap();
 
-
         CreateMap<Appointment, AppointmentModel>();
         CreateMap<AppointmentModel, Appointment>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -36,5 +35,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Pet, opt => opt.Ignore())
             .ForMember(dest => dest.Vet, opt => opt.Ignore())
             .ForMember(dest => dest.VetStaff, opt => opt.Ignore());
+
+        CreateMap<Company, CompanyModel>();
     }
 }
