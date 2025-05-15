@@ -11,5 +11,10 @@ public class PetOwnerConfiguration : IEntityTypeConfiguration<PetOwner>
             .HasForeignKey<PetOwner>(po => po.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(po => po.Pets)
+            .WithOne(p => p.PetOwner)
+            .HasForeignKey(p => p.PetOwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

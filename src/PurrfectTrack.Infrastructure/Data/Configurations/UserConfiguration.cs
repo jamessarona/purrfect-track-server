@@ -22,11 +22,21 @@ class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder.Property(u => u.IsActive)
-            .IsRequired(); 
+            .IsRequired();
 
         builder.HasOne(u => u.PetOwnerProfile)
             .WithOne(po => po.User)
             .HasForeignKey<PetOwner>(po => po.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(u => u.VetProfile)
+            .WithOne(v => v.User)
+            .HasForeignKey<Vet>(v => v.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(u => u.VetStaffProfile)
+            .WithOne(vf => vf.User)
+            .HasForeignKey<PetOwner>(vf => vf.UserId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
