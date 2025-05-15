@@ -1,12 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.Users.Queries.GetCurrentUser;
-using PurrfectTrack.Application.Users.Queries.GetUserById;
-using PurrfectTrack.Application.Users.Queries.GetUsers;
-using PurrfectTrack.Application.Users.Queries.GetUsersByRole;
-using PurrfectTrack.Shared.Pagination;
-using System.Threading;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        UsersController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api.Controllers;
 

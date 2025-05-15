@@ -1,12 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.Companies.Commands.DeleteCompany;
-using PurrfectTrack.Application.Companies.Commands.UpdateCompany;
-using PurrfectTrack.Application.Companies.Queries.GetCompanies;
-using PurrfectTrack.Application.Companies.Queries.GetCompanyById;
-using PurrfectTrack.Application.Pets.Commands.CreatePet;
-using PurrfectTrack.Shared.Pagination;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        CompanyController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api.Controllers;
 

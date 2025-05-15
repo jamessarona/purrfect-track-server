@@ -1,9 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.Users.Commands.Login;
-using PurrfectTrack.Application.Users.Commands.Logout;
-using PurrfectTrack.Application.Users.Commands.RefreshTokenFeature;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        AuthController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api.Controllers;
 

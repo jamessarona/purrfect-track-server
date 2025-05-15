@@ -1,9 +1,13 @@
-﻿using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
-using PurrfectTrack.Application.Mappings;
-using PurrfectTrack.Shared.Exceptions.Handler;
-using System.Diagnostics;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        DependencyInjection
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api;
 

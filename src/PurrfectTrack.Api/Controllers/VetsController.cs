@@ -1,11 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.Vets.Commands.CreateVet;
-using PurrfectTrack.Application.Vets.Commands.DeleteVet;
-using PurrfectTrack.Application.Vets.Commands.UpdateVet;
-using PurrfectTrack.Application.Vets.Queries.GetVetById;
-using PurrfectTrack.Application.Vets.Queries.GetVets;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        VetsController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api.Controllers;
 

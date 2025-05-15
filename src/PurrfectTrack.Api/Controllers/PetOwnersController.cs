@@ -1,13 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.PetOwners.Commands.CreatePetOwner;
-using PurrfectTrack.Application.PetOwners.Commands.DeletePetOwner;
-using PurrfectTrack.Application.PetOwners.Commands.UpdatePetOwner;
-using PurrfectTrack.Application.PetOwners.Commands.UploadPetOwnerImage;
-using PurrfectTrack.Application.PetOwners.Queries.GetPetOwnerById;
-using PurrfectTrack.Application.PetOwners.Queries.GetPetOwnerByPet;
-using PurrfectTrack.Application.PetOwners.Queries.GetPetOwners;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        PetOwnersController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 [Route("api/[controller]")]
 [ApiController]

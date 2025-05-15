@@ -1,8 +1,13 @@
-using Microsoft.AspNetCore.Authorization;
-using PurrfectTrack.Api;
-using PurrfectTrack.Application;
-using PurrfectTrack.Infrastructure;
-using PurrfectTrack.Infrastructure.Data.Extensions;
+// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        Program
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 var builder = WebApplication.CreateBuilder(args);
 

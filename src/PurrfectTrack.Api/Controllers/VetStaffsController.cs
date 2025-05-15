@@ -1,11 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PurrfectTrack.Application.VetStaffs.Commands.CreateVetStaff;
-using PurrfectTrack.Application.VetStaffs.Commands.DeleteVetStaff;
-using PurrfectTrack.Application.VetStaffs.Commands.UpdateVetStaff;
-using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffById;
-using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffs;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        VetStaffsController
+//  Created:     5/16/2025 7:32:19 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Api.Controllers;
 
