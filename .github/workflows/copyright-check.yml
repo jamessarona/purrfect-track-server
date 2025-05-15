@@ -1,0 +1,40 @@
+name: Copyright Check
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-copyright:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for copyright header
+        run: |
+          # Find all added/modified .cs files in the pull request
+          git fetch origin ${{ github.base_ref }}
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep '\.cs$' || true)
+
+          echo "Changed files: $CHANGED_FILES"
+
+          ERROR_FOUND=0
+
+          for file in $CHANGED_FILES; do
+            if [ -f "$file" ]; then
+              if ! grep -q "Copyright" "$file" || ! grep -q "PurrfectTrack.Server" "$file"; then
+                echo "❌ Missing required header in: $file"
+                ERROR_FOUND=1
+              fi
+            fi
+          done
+
+          if [ "$ERROR_FOUND" -ne 0 ]; then
+            echo "❌ One or more .cs files are missing required copyright info."
+            exit 1
+          else
+            echo "✅ All .cs files contain the required headers."
+          fi
