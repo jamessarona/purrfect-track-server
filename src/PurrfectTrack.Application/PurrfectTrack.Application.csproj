@@ -16,4 +16,8 @@
     <ProjectReference Include="..\PurrfectTrack.Shared\PurrfectTrack.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Appointments\Queries\" />
+  </ItemGroup>
+
 </Project>
