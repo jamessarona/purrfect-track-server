@@ -43,7 +43,7 @@ public class PetsController : ControllerBase
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Administrator,PetOwner")]
-    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeletePet(Guid id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeletePetCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : NotFound();

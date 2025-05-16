@@ -52,11 +52,13 @@ global using PurrfectTrack.Application.Vets.Commands.DeleteVet;
 global using PurrfectTrack.Application.Vets.Commands.UpdateVet;
 global using PurrfectTrack.Application.Vets.Queries.GetVetById;
 global using PurrfectTrack.Application.Vets.Queries.GetVets;
+global using PurrfectTrack.Application.Vets.Queries.GetVetsByCompany;
 global using PurrfectTrack.Application.VetStaffs.Commands.CreateVetStaff;
 global using PurrfectTrack.Application.VetStaffs.Commands.DeleteVetStaff;
 global using PurrfectTrack.Application.VetStaffs.Commands.UpdateVetStaff;
 global using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffById;
 global using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffs;
+global using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffsByCompany;
 
 global using PurrfectTrack.Infrastructure;
 global using PurrfectTrack.Infrastructure.Data.Extensions;

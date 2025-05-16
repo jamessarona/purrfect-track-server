@@ -60,6 +60,13 @@ public class VetsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("company/{companyId}")]
+    public async Task<IActionResult> GetVetsByCompany([FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetVetsByCompanyQuery(companyId), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetVetById(Guid id, CancellationToken cancellationToken)
     {

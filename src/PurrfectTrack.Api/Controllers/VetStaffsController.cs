@@ -27,12 +27,12 @@ public class VetStaffsController : ControllerBase
     public async Task<IActionResult> CreateVetStaff([FromBody] CreateVetStaffCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return CreatedAtAction(nameof(GetVetById), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(GetVetStaffById), new { id = result.Id }, result);
     }
 
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "Administrator,VetStaff")]
-    public async Task<IActionResult> UpdateVet(Guid id, [FromBody] UpdateVetStaffCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateVetStaff(Guid id, [FromBody] UpdateVetStaffCommand command, CancellationToken cancellationToken)
     {
         if (id != command.Id)
             return BadRequest("Vet ID mismatch");
@@ -46,7 +46,7 @@ public class VetStaffsController : ControllerBase
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> DeleteVet(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteVetStaff(Guid id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeleteVetStaffCommand(id), cancellationToken);
         return result.IsSuccess ? NoContent() : NotFound();
@@ -54,14 +54,21 @@ public class VetStaffsController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> GetVets(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetVetStaffs(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetVetStaffsQuery(), cancellationToken);
         return Ok(result);
     }
 
+    [HttpGet("company/{companyId:guid}")]
+    public async Task<IActionResult> GetVetStaffsByCompany([FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new GetVetStaffsByCompanyQuery(companyId), cancellationToken);
+        return Ok(result);
+    }
+
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetVetById(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetVetStaffById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetVetStaffByIdQuery(id);
         var result = await _mediator.Send(query, cancellationToken);
