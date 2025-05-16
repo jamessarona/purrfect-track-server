@@ -9,4 +9,5 @@ public class VetModel : ContactModel
     public string? ClinicName { get; set; }
     public string? ClinicAddress { get; set; }
     public DateTime? EmploymentDate { get; set; }
+    public Guid? CompanyId { get; set; }
 }

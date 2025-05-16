@@ -1,5 +1,4 @@
 ﻿using PurrfectTrack.Domain.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace PurrfectTrack.Application.DTOs;
 
@@ -12,17 +11,20 @@ public class AppointmentModel
     public DateTime? EndDate { get; set; }
     public string? Location { get; set; }
 
+    public Guid CompanyId { get; set; }
+    public CompanyModel? Company { get; set; }
+
     public Guid PetOwnerId { get; set; }
-    public PetOwner? PetOwner { get; set; }
+    public PetOwnerModel? PetOwner { get; set; }
 
     public Guid? PetId { get; set; }
-    public Pet? Pet { get; set; }
+    public PetModel? Pet { get; set; }
 
     public Guid? VetId { get; set; }
-    public Vet? Vet { get; set; }
+    public VetModel? Vet { get; set; }
 
     public Guid? VetStaffId { get; set; }
-    public VetStaff? VetStaff { get; set; }
+    public VetStaffModel? VetStaff { get; set; }
 
     public AppointmentStatus Status { get; set; }
     public string? Notes { get; set; }

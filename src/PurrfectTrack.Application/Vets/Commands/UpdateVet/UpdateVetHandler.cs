@@ -40,6 +40,7 @@ public class UpdateVetHandler
         vet.ClinicName = command.ClinicName ?? vet.ClinicName;
         vet.ClinicAddress = command.ClinicAddress ?? vet.ClinicAddress;
         vet.EmploymentDate = command.EmploymentDate ?? vet.EmploymentDate;
+        vet.CompanyId = command.CompanyId ?? vet.CompanyId;
 
         await dbContext.SaveChangesAsync(cancellationToken);
 

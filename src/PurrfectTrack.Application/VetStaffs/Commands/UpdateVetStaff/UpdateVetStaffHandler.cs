@@ -35,6 +35,7 @@ public class UpdateVetStaffHandler
         vetStaff.Position = command.Position ?? vetStaff.Position;
         vetStaff.Department = command.Department ?? vetStaff.Department;
         vetStaff.EmploymentDate = command.EmploymentDate ?? vetStaff.EmploymentDate;
+        vetStaff.CompanyId = command.CompanyId ?? vetStaff.CompanyId;
 
         await dbContext.SaveChangesAsync(cancellationToken);
 

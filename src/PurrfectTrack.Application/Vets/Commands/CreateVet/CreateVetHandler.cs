@@ -54,7 +54,8 @@ public class CreateVetHandler
             command.YearsOfExperience,
             command.ClinicName,
             command.ClinicAddress,
-            command.EmploymentDate
+            command.EmploymentDate,
+            command.CompanyId
         );
 
         var dbTransaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);

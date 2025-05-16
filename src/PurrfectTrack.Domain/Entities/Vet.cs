@@ -22,17 +22,17 @@ public class Vet : Contact
     public DateTime? EmploymentDate { get; set; }
 
     public Guid? CompanyId { get; set; }
-    public Company? Company { get; set; } = default!;
+    public Company? Company { get; set; }
 
     protected Vet() { }
 
     public Vet(Guid userId, string firstName, string lastName,
-        string? phoneNumber = null, string? address = null,
-        DateTime? dateOfBirth = null, string? gender = null,
-        string? licenseNumber = null, DateTime? licenseExpiryDate = null,
-        string? specialization = null, int? yearsOfExperience = null,
-        string? clinicName = null, string? clinicAddress = null,
-        DateTime? employmentDate = null, Guid? companyId = null)
+        string? phoneNumber, string? address,
+        DateTime? dateOfBirth, string? gender,
+        string? licenseNumber, DateTime? licenseExpiryDate,
+        string? specialization, int? yearsOfExperience,
+        string? clinicName, string? clinicAddress,
+        DateTime? employmentDate, Guid? companyId)
         : base(userId, firstName, lastName, phoneNumber, address, dateOfBirth, gender)
     {
         LicenseNumber = licenseNumber;

@@ -9,8 +9,6 @@
 //  Unauthorized copying or distribution is prohibited.
 // -----------------------------------------------------------------------------
 
-using PurrfectTrack.Domain.Enums;
-
 namespace PurrfectTrack.Domain.Entities;
 
 public class User : Entity<Guid>

@@ -47,7 +47,8 @@ public class CreateVetStaffHandler
             command.Gender,
             command.Position,
             command.Department,
-            command.EmploymentDate
+            command.EmploymentDate,
+            command.CompanyId
         );
 
         var dbTransaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);

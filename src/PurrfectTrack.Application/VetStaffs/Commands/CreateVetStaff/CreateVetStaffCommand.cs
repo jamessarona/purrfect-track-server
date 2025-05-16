@@ -4,7 +4,7 @@ using PurrfectTrack.Shared.CQRS;
 namespace PurrfectTrack.Application.VetStaffs.Commands.CreateVetStaff;
 
 public record CreateVetStaffCommand(string Email, string Password, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender,
-        string? Position, string? Department, DateTime? EmploymentDate)
+        string? Position, string? Department, DateTime? EmploymentDate, Guid? CompanyId)
     : ICommand<CreateVetStaffResult>;
 
 public record CreateVetStaffResult(Guid Id);

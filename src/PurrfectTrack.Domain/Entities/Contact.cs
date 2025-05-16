@@ -33,8 +33,8 @@ public class Contact : Entity<Guid>
     protected Contact() { }
 
     public Contact(Guid userId, string firstName, string lastName,
-        string? phoneNumber = null, string? address = null,
-        DateTime? dateOfBirth = null, string? gender = null)
+        string? phoneNumber, string? address,
+        DateTime? dateOfBirth, string? gender)
     {
         Id = Guid.NewGuid();
         UserId = userId;

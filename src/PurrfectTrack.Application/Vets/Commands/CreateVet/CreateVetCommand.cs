@@ -5,7 +5,7 @@ using PurrfectTrack.Shared.CQRS;
 namespace PurrfectTrack.Application.Vets.Commands.CreateVet;
 
 public record CreateVetCommand(string Email, string Password, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender,
-        string? LicenseNumber, DateTime? LicenseExpiryDate, string? Specialization, int? YearsOfExperience, string? ClinicName, string? ClinicAddress, DateTime? EmploymentDate)
+        string? LicenseNumber, DateTime? LicenseExpiryDate, string? Specialization, int? YearsOfExperience, string? ClinicName, string? ClinicAddress, DateTime? EmploymentDate, Guid? CompanyId)
     : ICommand<CreateVetResult>;
 
 public record CreateVetResult(Guid Id);

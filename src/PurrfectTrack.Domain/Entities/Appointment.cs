@@ -26,7 +26,12 @@ public class Appointment : Entity<Guid>
     public DateTime EndDate { get; set; }
     
     public string? Location { get; set; }
-    
+
+    [Required]
+    public Guid CompanyId { get; set; }
+
+    public Company? Company { get; set; }
+
     [Required]
     public Guid PetOwnerId { get; set; }
 
@@ -45,17 +50,14 @@ public class Appointment : Entity<Guid>
     public VetStaff? VetStaff { get; set; }
 
     [Required]
-    public AppointmentStatus? Status { get; set; }
+    public AppointmentStatus Status { get; set; }
     
     public string? Notes { get; set; }
 
-    public Guid? CompanyId { get; set; }
-    public Company? Company { get; set; } = default!;
-
     protected Appointment() { }
 
-    public Appointment(string title, string? description, DateTime startDate, DateTime endDate, string? location, 
-        Guid petOwnerId, Guid? petId, Guid? vetId, Guid? vetStaffId, AppointmentStatus status, string notes, Guid companyId)
+    public Appointment(string title, string? description, DateTime startDate, DateTime endDate, string? location,
+        Guid companyId, Guid petOwnerId, Guid? petId, Guid? vetId, Guid? vetStaffId, AppointmentStatus status, string? notes)
     {
         Id = Guid.NewGuid();
         Title = title;
@@ -63,11 +65,11 @@ public class Appointment : Entity<Guid>
         StartDate = startDate;
         EndDate = endDate;
         Location = location;
+        CompanyId = companyId;
         PetOwnerId = petOwnerId;
         PetId = petId;
         VetId = vetId;
         VetStaffId = vetStaffId;
-        CompanyId = companyId;
         Status = status;
         Notes = notes;
     }

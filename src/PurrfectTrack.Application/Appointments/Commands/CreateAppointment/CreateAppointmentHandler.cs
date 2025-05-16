@@ -18,13 +18,13 @@ public class CreateAppointmentHandler
             command.StartDate,
             command.EndDate,
             command.Location,
+            command.CompanyId,
             command.PetOwnerId,
             command.PetId,
             command.VetId,
             command.VetStaffId,
             command.Status,
-            command.Notes,
-            command.CompanyId
+            command.Notes
             );
 
         dbContext.Appointments.Add(appointment);

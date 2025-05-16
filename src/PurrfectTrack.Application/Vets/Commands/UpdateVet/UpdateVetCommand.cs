@@ -4,7 +4,7 @@ using PurrfectTrack.Shared.CQRS;
 namespace PurrfectTrack.Application.Vets.Commands.UpdateVet;
 
 public record UpdateVetCommand(Guid Id, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender,
-        string? LicenseNumber, DateTime? LicenseExpiryDate, string? Specialization, int? YearsOfExperience, string? ClinicName, string? ClinicAddress, DateTime? EmploymentDate)
+        string? LicenseNumber, DateTime? LicenseExpiryDate, string? Specialization, int? YearsOfExperience, string? ClinicName, string? ClinicAddress, DateTime? EmploymentDate, Guid? CompanyId)
     : ICommand<UpdateVetResult>;
 
 public record UpdateVetResult(Guid Id);
