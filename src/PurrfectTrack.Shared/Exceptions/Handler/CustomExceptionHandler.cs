@@ -1,4 +1,15 @@
-﻿using FluentValidation;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        CustomExceptionHandler
+//  Created:     5/16/2025 8:04:32 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
+
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
