@@ -8,35 +8,35 @@ public class VetConfiguration : IEntityTypeConfiguration<Vet>
     {
         ContactConfigurationHelper.ConfigureContactFields(builder);
 
-        builder.HasOne(po => po.User)
+        builder.HasOne(v => v.User)
             .WithOne(u => u.VetProfile)
-            .HasForeignKey<Vet>(po => po.UserId)
+            .HasForeignKey<Vet>(v => v.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(p => p.LicenseNumber)
+        builder.Property(v => v.LicenseNumber)
             .IsRequired(false)
             .HasMaxLength(50);
 
-        builder.Property(p => p.LicenseExpiryDate)
+        builder.Property(v => v.LicenseExpiryDate)
             .IsRequired(false);
 
-        builder.Property(p => p.Specialization)
+        builder.Property(v => v.Specialization)
             .IsRequired(false)
             .HasMaxLength(100);
 
-        builder.Property(p => p.YearsOfExperience)
+        builder.Property(v => v.YearsOfExperience)
             .IsRequired(false);
 
-        builder.Property(p => p.ClinicName)
+        builder.Property(v => v.ClinicName)
             .IsRequired(false)
             .HasMaxLength(150);
 
-        builder.Property(p => p.ClinicAddress)
+        builder.Property(v => v.ClinicAddress)
             .IsRequired(false)
             .HasMaxLength(300);
 
-        builder.Property(p => p.EmploymentDate)
+        builder.Property(v => v.EmploymentDate)
             .IsRequired(false);
 
         builder.HasOne(v => v.Company)

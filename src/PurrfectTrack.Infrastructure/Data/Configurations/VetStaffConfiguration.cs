@@ -6,26 +6,26 @@ public class VetStaffConfiguration : IEntityTypeConfiguration<VetStaff>
     {
         ContactConfigurationHelper.ConfigureContactFields(builder);
 
-        builder.HasOne(po => po.User)
+        builder.HasOne(vs => vs.User)
             .WithOne(u => u.VetStaffProfile)
-            .HasForeignKey<VetStaff>(po => po.UserId)
+            .HasForeignKey<VetStaff>(vs => vs.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(p => p.Position)
+        builder.Property(vs => vs.Position)
             .IsRequired(false)
             .HasMaxLength(50);
 
-        builder.Property(p => p.Department)
+        builder.Property(vs => vs.Department)
             .IsRequired(false)
             .HasMaxLength(50);
 
-        builder.Property(p => p.EmploymentDate)
+        builder.Property(vs => vs.EmploymentDate)
             .IsRequired(false);
 
-        builder.HasOne(vf => vf.Company)
+        builder.HasOne(vs => vs.Company)
             .WithMany(c => c.VetStaffs)
-            .HasForeignKey(vf => vf.CompanyId)
+            .HasForeignKey(vs => vs.CompanyId)
             .OnDelete(DeleteBehavior.SetNull);
     }
 }
