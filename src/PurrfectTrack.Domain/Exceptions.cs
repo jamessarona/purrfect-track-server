@@ -1,4 +1,15 @@
-﻿namespace PurrfectTrack.Domain;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        DomainException
+//  Created:     5/16/2025 6:28:24 PM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
+
+namespace PurrfectTrack.Domain;
 
 public class DomainException : Exception
 {
