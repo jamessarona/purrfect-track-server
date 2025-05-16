@@ -12,6 +12,29 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Companies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TaxpayerId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Companies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -129,6 +152,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     ClinicName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     ClinicAddress = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     EmploymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -146,6 +170,12 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_Vets", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Vets_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_Vets_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
@@ -161,6 +191,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Department = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     EmploymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -177,6 +208,12 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VetStaffs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VetStaffs_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_VetStaffs_Users_UserId",
                         column: x => x.UserId,
@@ -226,6 +263,7 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PetOwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     VetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -240,6 +278,12 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Appointments_PetOwners_PetOwnerId",
                         column: x => x.PetOwnerId,
@@ -267,6 +311,11 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_CompanyId",
+                table: "Appointments",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PetId",
                 table: "Appointments",
                 column: "PetId");
@@ -285,6 +334,13 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 name: "IX_Appointments_VetStaffId",
                 table: "Appointments",
                 column: "VetStaffId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_Email",
+                table: "Companies",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PetOwners_UserId",
@@ -320,10 +376,20 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Vets_CompanyId",
+                table: "Vets",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vets_UserId",
                 table: "Vets",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VetStaffs_CompanyId",
+                table: "VetStaffs",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VetStaffs_UserId",
@@ -355,6 +421,9 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "PetOwners");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Users");

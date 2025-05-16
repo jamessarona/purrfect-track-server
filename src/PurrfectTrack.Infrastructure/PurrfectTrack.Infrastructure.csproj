@@ -22,8 +22,4 @@
     <ProjectReference Include="..\PurrfectTrack.Application\PurrfectTrack.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Caching\" />
-  </ItemGroup>
-
 </Project>
