@@ -13,18 +13,18 @@ namespace PurrfectTrack.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CompanyController : ControllerBase
+public class CompaniesController : ControllerBase
 {
     private readonly ISender _mediator;
 
-    public CompanyController(ISender mediator)
+    public CompaniesController(ISender mediator)
     {
         _mediator = mediator;
     }
 
     [HttpPost]
     [Authorize(Roles = "Administrator")]
-    public async Task<IActionResult> CreateCompany([FromBody] CreatePetCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(GetCompanyById), new { id = result.Id }, result);
@@ -62,15 +62,16 @@ public class CompanyController : ControllerBase
 
         var result = await _mediator.Send(query, cancellatioonToken);
 
-        return Ok(result.Companies);
+        return Ok(result);
     }
 
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetCompanyById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetCompanyByIdQuery(id);
 
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(result.Company);
+        return Ok(result);
     }
 }
