@@ -36,7 +36,7 @@ class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasOne(u => u.VetStaffProfile)
             .WithOne(vf => vf.User)
-            .HasForeignKey<PetOwner>(vf => vf.UserId)
+            .HasForeignKey<VetStaff>(vf => vf.UserId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
