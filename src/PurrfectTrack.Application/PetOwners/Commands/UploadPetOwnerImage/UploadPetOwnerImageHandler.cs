@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using PurrfectTrack.Application.Abstractions;
-using PurrfectTrack.Application.Data;
-using PurrfectTrack.Application.Exceptions;
-using PurrfectTrack.Application.Utils;
-using PurrfectTrack.Infrastructure.Caching;
-using PurrfectTrack.Shared.CQRS;
-using PurrfectTrack.Shared.Exceptions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        UploadPetOwnerImageHandler
+//  Created:     5/17/2025 1:41:18 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Application.PetOwners.Commands.UploadPetOwnerImage;
 

@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using PurrfectTrack.Application.Abstractions;
-using PurrfectTrack.Application.Data;
-using PurrfectTrack.Application.Utils;
-using PurrfectTrack.Domain.Enums;
-using PurrfectTrack.Infrastructure.Caching;
-using PurrfectTrack.Shared.CQRS;
-using PurrfectTrack.Shared.Security;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        CreateVetHandler
+//  Created:     5/17/2025 1:41:18 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Application.Vets.Commands.CreateVet;
 

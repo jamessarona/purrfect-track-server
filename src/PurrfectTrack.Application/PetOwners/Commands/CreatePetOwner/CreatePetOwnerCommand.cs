@@ -1,7 +1,14 @@
-﻿using FluentValidation;
-using PurrfectTrack.Domain.Enums;
-using PurrfectTrack.Shared.CQRS;
-using System.ComponentModel.DataAnnotations;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        CreatePetOwnerCommand
+//  Created:     5/17/2025 1:41:18 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
+
 namespace PurrfectTrack.Application.PetOwners.Commands.CreatePetOwner;
 
 public record CreatePetOwnerCommand(string Email, string Password, string FirstName, string LastName, string? PhoneNumber, string? Address, DateTime? DateOfBirth, string? Gender)

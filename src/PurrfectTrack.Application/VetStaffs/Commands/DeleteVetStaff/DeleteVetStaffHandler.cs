@@ -1,8 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PurrfectTrack.Application.Data;
-using PurrfectTrack.Application.Utils;
-using PurrfectTrack.Infrastructure.Caching;
-using PurrfectTrack.Shared.CQRS;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        DeleteVetStaffHandler
+//  Created:     5/17/2025 1:41:18 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Application.VetStaffs.Commands.DeleteVetStaff;
 

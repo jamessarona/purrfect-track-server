@@ -1,11 +1,13 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
-using PurrfectTrack.Shared.CQRS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -----------------------------------------------------------------------------
+//  Copyright © 2025 James Angelo
+//  All rights reserved.
+//
+//  File:        UploadPetImageCommand
+//  Created:     5/17/2025 1:41:18 AM
+//
+//  This file is part of the PurrfectTrack.Server.
+//  Unauthorized copying or distribution is prohibited.
+// -----------------------------------------------------------------------------
 
 namespace PurrfectTrack.Application.Pets.Commands.UploadPetImage;
 

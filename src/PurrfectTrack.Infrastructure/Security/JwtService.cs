@@ -1,7 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using PurrfectTrack.Domain.Enums;
-using System.IdentityModel.Tokens.Jwt;
-// -----------------------------------------------------------------------------
+﻿// -----------------------------------------------------------------------------
 //  Copyright © 2025 James Angelo
 //  All rights reserved.
 //
