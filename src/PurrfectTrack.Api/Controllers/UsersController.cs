@@ -27,14 +27,14 @@ public class UsersController : ControllerBase
     {
         var query = new GetUserByIdQuery(id);
         var result = await _mediator.Send(query, cancellationToken);
-        return Ok(result.User);
+        return Ok(result);
     }
 
     [HttpGet("current")]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new GetCurrentUserQuery(), cancellationToken);
-        return Ok(result.User);
+        return Ok(result);
     }
 
     [HttpGet]
@@ -43,7 +43,7 @@ public class UsersController : ControllerBase
     {
         var query = new GetUsersQuery(new PaginationRequest(pageIndex, pageSize));
         var result = await _mediator.Send(query, cancellationToken);
-        return Ok(result.Users);
+        return Ok(result);
     }
 
     [HttpGet("role")]
@@ -52,6 +52,6 @@ public class UsersController : ControllerBase
     {
         var query = new GetUsersByRoleQuery(role, new PaginationRequest(pageIndex, pageSize));
         var result = await _mediator.Send(query, cancellationToken);
-        return Ok(result.Users);
+        return Ok(result);
     }
 }

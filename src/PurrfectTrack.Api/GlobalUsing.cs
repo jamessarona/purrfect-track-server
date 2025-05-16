@@ -20,6 +20,7 @@ global using Microsoft.OpenApi.Models;
 
 global using PurrfectTrack.Api;
 global using PurrfectTrack.Application;
+global using PurrfectTrack.Application.Companies.Commands.CreateCompany;
 global using PurrfectTrack.Application.Companies.Commands.DeleteCompany;
 global using PurrfectTrack.Application.Companies.Commands.UpdateCompany;
 global using PurrfectTrack.Application.Companies.Queries.GetCompanies;

@@ -19,7 +19,7 @@ public class GetCompanyByIdHandler
     public async Task<GetCompanyByIdResult> Handle(GetCompanyByIdQuery query, CancellationToken cancellationToken)
     {
         var company = await dbContext.Companies
-            .FirstOrDefaultAsync(c => c.Id == query.Id, cancellationToken);
+            .SingleOrDefaultAsync(c => c.Id == query.Id, cancellationToken);
 
         if (company is null)
             throw new CompanyNotFoundException(query.Id);
