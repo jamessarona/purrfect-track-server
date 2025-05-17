@@ -16,12 +16,4 @@
     <ProjectReference Include="..\PurrfectTrack.Shared\PurrfectTrack.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Appointments\Commands\DeleteAppointment\" />
-    <Folder Include="Appointments\Commands\UpdateAppointment\" />
-    <Folder Include="Appointments\Queries\GetAppointmentByCompany\" />
-    <Folder Include="Appointments\Queries\GetAppointmentById\" />
-    <Folder Include="Appointments\Queries\GetAppointments\" />
-  </ItemGroup>
-
 </Project>
