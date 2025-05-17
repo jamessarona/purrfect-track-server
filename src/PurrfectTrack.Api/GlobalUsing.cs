@@ -20,6 +20,12 @@ global using Microsoft.OpenApi.Models;
 
 global using PurrfectTrack.Api;
 global using PurrfectTrack.Application;
+global using PurrfectTrack.Application.Appointments.Commands.CreateAppointment;
+global using PurrfectTrack.Application.Appointments.Commands.DeleteAppointment;
+global using PurrfectTrack.Application.Appointments.Commands.UpdateAppointment;
+global using PurrfectTrack.Application.Appointments.Queries.GetAppointmentById;
+global using PurrfectTrack.Application.Appointments.Queries.GetAppointments;
+global using PurrfectTrack.Application.Appointments.Queries.GetAppointmentsByCompany;
 global using PurrfectTrack.Application.Companies.Commands.CreateCompany;
 global using PurrfectTrack.Application.Companies.Commands.DeleteCompany;
 global using PurrfectTrack.Application.Companies.Commands.UpdateCompany;
