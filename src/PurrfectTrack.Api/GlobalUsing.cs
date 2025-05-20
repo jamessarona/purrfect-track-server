@@ -20,6 +20,8 @@ global using Microsoft.OpenApi.Models;
 
 global using PurrfectTrack.Api;
 global using PurrfectTrack.Application;
+
+global using PurrfectTrack.Application.Abstractions;
 global using PurrfectTrack.Application.Appointments.Commands.CreateAppointment;
 global using PurrfectTrack.Application.Appointments.Commands.DeleteAppointment;
 global using PurrfectTrack.Application.Appointments.Commands.UpdateAppointment;
@@ -68,6 +70,7 @@ global using PurrfectTrack.Application.VetStaffs.Queries.GetVetStaffsByCompany;
 
 global using PurrfectTrack.Infrastructure;
 global using PurrfectTrack.Infrastructure.Data.Extensions;
+global using PurrfectTrack.Infrastructure.Security;
 
 global using PurrfectTrack.Shared.Exceptions.Handler;
 global using PurrfectTrack.Shared.Pagination;

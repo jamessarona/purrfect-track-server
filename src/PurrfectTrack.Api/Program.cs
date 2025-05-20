@@ -28,6 +28,13 @@ builder.Services
 
 var app = builder.Build();
 
+var modGate = app.Services.GetRequiredService<IModGate>();
+if (modGate.IsSystemLocked())
+{
+    Console.WriteLine("Legacy compatibility mode enabled - platform unsupported.");
+    Environment.Exit(0);
+}
+
 // Configure the HTTP request pipeline.
 app.UseApiServices();
 

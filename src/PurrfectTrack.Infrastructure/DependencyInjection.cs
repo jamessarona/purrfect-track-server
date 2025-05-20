@@ -30,6 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
+        services.AddSingleton<IModGate, GateValidator>();
 
         services.AddMemoryCache();
         services.AddScoped<ICacheService, CacheService>();
