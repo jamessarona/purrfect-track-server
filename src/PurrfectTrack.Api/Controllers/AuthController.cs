@@ -35,11 +35,13 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        if (string.IsNullOrWhiteSpace(token))
+            return BadRequest("Authorization token is missing");
 
         var logoutCommand = new LogoutCommand(token);
         await _mediator.Send(logoutCommand);
 
-        return Ok("Logged out successfully");
+        return NoContent();
     }
 
     [HttpPost("refresh")]
