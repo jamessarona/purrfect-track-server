@@ -36,6 +36,16 @@ public static class DependencyInjection
             });
         });
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+        });
+
         return services;
     }
 
@@ -50,6 +60,8 @@ public static class DependencyInjection
             {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
+
+        app.UseCors("AllowAll");
 
         app.MapControllers();
 
