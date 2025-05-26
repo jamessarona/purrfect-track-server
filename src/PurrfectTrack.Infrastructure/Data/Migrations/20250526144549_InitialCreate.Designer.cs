@@ -12,7 +12,7 @@ using PurrfectTrack.Infrastructure.Data;
 namespace PurrfectTrack.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516121436_InitialCreate")]
+    [Migration("20250526144549_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -373,9 +373,8 @@ namespace PurrfectTrack.Infrastructure.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
