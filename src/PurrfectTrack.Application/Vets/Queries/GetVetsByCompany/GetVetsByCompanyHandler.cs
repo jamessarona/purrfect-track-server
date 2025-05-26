@@ -14,7 +14,7 @@ namespace PurrfectTrack.Application.Vets.Queries.GetVetsByCompany;
 public class GetVetsByCompanyHandler
     : BaseQueryHandler, IQueryHandler<GetVetsByCompanyQuery, GetVetsByCompanyResult>
 {
-    public GetVetsByCompanyHandler(IApplicationDbContext dbContext, IMapper mapper) 
+    public GetVetsByCompanyHandler(IApplicationDbContext dbContext, IMapper mapper)
         : base(dbContext, mapper)
     {
     }
@@ -22,6 +22,7 @@ public class GetVetsByCompanyHandler
     public async Task<GetVetsByCompanyResult> Handle(GetVetsByCompanyQuery query, CancellationToken cancellationToken)
     {
         var vets = await dbContext.Vets
+            .Include(v => v.User)
             .Where(v => v.CompanyId == query.CompanyId)
             .ProjectTo<VetModel>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);

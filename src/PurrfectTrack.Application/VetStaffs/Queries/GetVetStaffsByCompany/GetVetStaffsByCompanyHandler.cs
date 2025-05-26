@@ -22,6 +22,7 @@ public class GetVetStaffsByCompanyHandler
     public async Task<GetVetStaffsByCompanyResult> Handle(GetVetStaffsByCompanyQuery query, CancellationToken cancellationToken)
     {
         var vetStaffs = await dbContext.VetStaffs
+            .Include(vs => vs.User)
             .Where(vs => vs.CompanyId == query.CompanyId)
             .ProjectTo<VetStaffModel>(mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
