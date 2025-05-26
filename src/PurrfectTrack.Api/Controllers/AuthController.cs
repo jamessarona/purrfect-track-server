@@ -28,27 +28,59 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(result);
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            Expires = DateTime.UtcNow.AddMinutes(command.RememberMe ? 60 * 24 * 30 : 60),
+            SameSite = SameSiteMode.Strict,
+            Path = "/"
+        };
+
+        Response.Cookies.Append("access_token", result.Token, cookieOptions);
+        Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
+
+        return Ok(new { SessionId = result.SessionId });
     }
 
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-        if (string.IsNullOrWhiteSpace(token))
+        var token = Request.Cookies["access_token"];
+        if (string.IsNullOrEmpty(token))
             return BadRequest("Authorization token is missing");
 
         var logoutCommand = new LogoutCommand(token);
         await _mediator.Send(logoutCommand);
+
+        Response.Cookies.Delete("access_token");
+        Response.Cookies.Delete("refresh_token");
 
         return NoContent();
     }
 
     [HttpPost("refresh")]
     [AllowAnonymous]
-    public async Task<IActionResult> Refresh([FromBody] RefreshTokenCommand command)
+    public async Task<IActionResult> Refresh()
     {
-        var result = await _mediator.Send(command);
-        return Ok(result);
+        var refreshToken = Request.Cookies["refresh_token"];
+        if (string.IsNullOrEmpty(refreshToken))
+            return Unauthorized("Refresh token is missing.");
+
+        var result = await _mediator.Send(new RefreshTokenCommand(refreshToken));
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = result.RefreshTokenExpiresAt
+        };
+
+        Response.Cookies.Append("access_token", result.AccessToken, cookieOptions);
+        Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
+
+        return Ok(new { Success = true });
     }
 }
