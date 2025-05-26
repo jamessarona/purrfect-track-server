@@ -13,5 +13,6 @@ namespace PurrfectTrack.Application.DTOs;
 
 public class PetOwnerModel : ContactModel
 {
+    public int NumberOfPets { get; set; }
     public List<PetModel> Pets { get; set; } = new();
 }
