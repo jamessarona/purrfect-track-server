@@ -22,7 +22,7 @@ public class JwtService : IJwtService
         _logger = logger;
     }
 
-    public string GenerateToken(Guid userId, UserRole role)
+    public string GenerateToken(Guid userId, UserRole role, DateTime expiresAt)
     {
         var roleName = Enum.GetName(typeof(UserRole), role) ?? throw new ArgumentException("Invalid role");
 
@@ -40,7 +40,7 @@ public class JwtService : IJwtService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(60),
+            expires: expiresAt,
             signingCredentials: credentials
         );
 

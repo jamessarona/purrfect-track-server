@@ -22,6 +22,13 @@ public class AuditService : IAuditService
 
     public string GetCurrentUser()
     {
-        return _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "SYSTEM";
+        var user = _httpContextAccessor.HttpContext?.User;
+        if (user?.Identity?.IsAuthenticated == true)
+        {
+            return user.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                ?? user.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
+                ?? "UNKNOWN";
+        }
+        return "SYSTEM";
     }
 }

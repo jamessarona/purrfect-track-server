@@ -9,6 +9,7 @@
 //  Unauthorized copying or distribution is prohibited.
 // -----------------------------------------------------------------------------
 
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;

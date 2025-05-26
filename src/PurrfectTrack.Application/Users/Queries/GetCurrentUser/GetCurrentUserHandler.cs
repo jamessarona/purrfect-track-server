@@ -9,6 +9,8 @@
 //  Unauthorized copying or distribution is prohibited.
 // -----------------------------------------------------------------------------
 
+using System.Security.Claims;
+
 namespace PurrfectTrack.Application.Users.Queries.GetCurrentUser;
 
 public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentUserQuery, GetCurrentUserResult>
@@ -23,7 +25,7 @@ public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentU
 
     public async Task<GetCurrentUserResult> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
     {
-        var currentUserId = GetCurrentUserId();
+        var currentUserId = GetCurrentUserIdFromClaims();
 
         var user = await dbContext.Users
             .FirstOrDefaultAsync(u => u.Id == currentUserId, cancellationToken);
@@ -36,12 +38,19 @@ public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentU
         return new GetCurrentUserResult(userModel);
     }
 
-    private Guid GetCurrentUserId()
+    private Guid GetCurrentUserIdFromClaims()
     {
-        var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("userId")?.Value;
+        var user = _httpContextAccessor.HttpContext?.User;
 
-        if (string.IsNullOrEmpty(userIdClaim))
+        if (user?.Identity?.IsAuthenticated != true)
             throw new UnauthorizedAccessException("User is not authenticated.");
+
+        var userIdClaim =
+            user.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+            user.FindFirst("sub")?.Value;
+
+        if (string.IsNullOrWhiteSpace(userIdClaim))
+            throw new UnauthorizedAccessException("User ID claim is missing.");
 
         return Guid.Parse(userIdClaim);
     }

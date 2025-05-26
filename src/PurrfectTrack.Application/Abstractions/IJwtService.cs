@@ -13,7 +13,7 @@ namespace PurrfectTrack.Application.Abstractions;
 
 public interface IJwtService
 {
-    string GenerateToken(Guid userId, UserRole role);
+    string GenerateToken(Guid userId, UserRole role, DateTime expiresAt);
     bool ValidateToken(string token);
     string GetUserIdFromToken(string token);
 }

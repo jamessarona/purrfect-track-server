@@ -16,45 +16,76 @@ public class RefreshTokenHandler : BaseHandler, ICommandHandler<RefreshTokenComm
     private readonly IJwtService _jwtService;
     private readonly IRefreshTokenService _refreshTokenService;
     private readonly ILogger<RefreshTokenHandler> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public RefreshTokenHandler(IApplicationDbContext dbContext, IJwtService jwtService, 
-            IRefreshTokenService refreshTokenService, ILogger<RefreshTokenHandler> logger)
+    public RefreshTokenHandler(
+        IApplicationDbContext dbContext,
+        IJwtService jwtService,
+        IRefreshTokenService refreshTokenService,
+        ILogger<RefreshTokenHandler> logger,
+        IHttpContextAccessor httpContextAccessor)
         : base(dbContext)
     {
         _jwtService = jwtService;
         _refreshTokenService = refreshTokenService;
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<RefreshTokenResult> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
+        var refreshTokenValue = request.RefreshToken;
+
+        if (string.IsNullOrEmpty(refreshTokenValue))
+        {
+            _logger.LogWarning("Refresh token missing.");
+            throw new UnauthorizedAccessException("Refresh token missing.");
+        }
+
         var refreshToken = await dbContext.RefreshTokens
             .Include(rt => rt.User)
-            .FirstOrDefaultAsync(rt => rt.Token == request.RefreshToken, cancellationToken);
+            .FirstOrDefaultAsync(rt => rt.Token == refreshTokenValue, cancellationToken);
 
-        if (refreshToken is null || refreshToken.IsRevoked || refreshToken.ExpiresAt <= DateTime.UtcNow)
+        if (refreshToken == null || refreshToken.IsRevoked || (refreshToken.ExpiresAt <= DateTime.UtcNow))
         {
             _logger.LogWarning("Invalid or expired refresh token.");
             throw new UnauthorizedAccessException("Invalid refresh token.");
         }
 
-        var newAccessToken = _jwtService.GenerateToken(refreshToken.UserId, refreshToken.User.Role);
+        bool isRememberMe = false;
+
+        if (refreshToken.ExpiresAt.HasValue && refreshToken.CreatedAt.HasValue)
+        {
+            var lifespan = refreshToken.ExpiresAt.Value - refreshToken.CreatedAt.Value;
+            isRememberMe = lifespan.TotalDays > 7;
+        }
+
+        var newAccessTokenExpiry = isRememberMe
+            ? DateTime.UtcNow.AddDays(30)
+            : DateTime.UtcNow.AddMinutes(60);
+
+        var newAccessToken = _jwtService.GenerateToken(
+            refreshToken.UserId,
+            refreshToken.User.Role,
+            newAccessTokenExpiry
+        );
+
         var newRefreshToken = _refreshTokenService.GenerateRefreshToken();
 
         refreshToken.IsRevoked = true;
+
         var replacement = new RefreshToken
         {
             Token = newRefreshToken,
             UserId = refreshToken.UserId,
             CreatedAt = DateTime.UtcNow,
-            ExpiresAt = DateTime.UtcNow.AddDays(7),
-            ReplacedByToken = null,
+            ExpiresAt = isRememberMe ? DateTime.UtcNow.AddDays(30) : DateTime.UtcNow.AddDays(7),
             IsRevoked = false
         };
 
         dbContext.RefreshTokens.Add(replacement);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new RefreshTokenResult(newAccessToken, newRefreshToken);
+        return new RefreshTokenResult(newAccessToken, newRefreshToken, replacement.ExpiresAt.Value);
     }
 }

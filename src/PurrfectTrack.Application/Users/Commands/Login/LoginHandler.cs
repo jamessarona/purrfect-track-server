@@ -38,9 +38,12 @@ public class LoginHandler
 
         ValidateUserPassword(user, command.Password);
 
-        var token = _jwtService.GenerateToken(user.Id, user.Role);
+        var now = DateTime.UtcNow;
+        var tokenExpiryMinutes = command.RememberMe ? 60 * 24 * 30 : 60;
 
-        var refreshToken = _refreshTokenService.GenerateRefreshToken(); 
+        var token = _jwtService.GenerateToken(user.Id, user.Role, now.AddMinutes(tokenExpiryMinutes));
+
+        var refreshToken = _refreshTokenService.GenerateRefreshToken();
 
         var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         var userAgent = _httpContextAccessor.HttpContext?.Request?.Headers["User-Agent"].ToString();
@@ -50,32 +53,46 @@ public class LoginHandler
         if (string.IsNullOrEmpty(userAgent))
             _logger.LogInformation("User-Agent header missing");
 
-        var now = DateTime.UtcNow;
         var session = new UserSession
         {
             UserId = user.Id,
             Token = token,
             CreatedAt = now,
-            ExpiresAt = now.AddMinutes(60),
+            ExpiresAt = now.AddMinutes(tokenExpiryMinutes),
             IpAddress = ip,
             UserAgent = userAgent
         };
 
         dbContext.UserSessions.Add(session);
-        await dbContext.SaveChangesAsync(cancellationToken);
+
+        var refreshTokenExpiryDays = command.RememberMe ? 30 : 7;
 
         var refreshTokenEntity = new RefreshToken
         {
             UserId = user.Id,
             Token = refreshToken,
             CreatedAt = now,
-            ExpiresAt = now.AddDays(7),
+            ExpiresAt = now.AddDays(refreshTokenExpiryDays),
             IpAddress = ip,
             UserAgent = userAgent
         };
 
         dbContext.RefreshTokens.Add(refreshTokenEntity);
+
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = now.AddMinutes(tokenExpiryMinutes)
+        };
+
+        if (command.RememberMe)
+        {
+            cookieOptions.Expires = now.AddDays(30);
+        }
 
         return new LoginResult(token, session.Id, refreshToken);
     }
