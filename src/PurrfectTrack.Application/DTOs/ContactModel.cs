@@ -16,8 +16,6 @@ public class ContactModel
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
 
-    public UserModel? User { get; set; }
-
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
     public string? PhoneNumber { get; set; }

@@ -34,10 +34,12 @@ public class MappingProfile : Profile
 
         CreateMap<Vet, VetModel>()
             .IncludeBase<Contact, ContactModel>()
+            .ForMember(dest => dest.Company, opt => opt.MapFrom(src => src.Company))
             .ReverseMap();
 
         CreateMap<VetStaff, VetStaffModel>()
             .IncludeBase<Contact, ContactModel>()
+            .ForMember(dest => dest.Company, opt => opt.MapFrom(src => src.Company))
             .ReverseMap();
 
         CreateMap<Appointment, AppointmentModel>();
@@ -48,6 +50,14 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Vet, opt => opt.Ignore())
             .ForMember(dest => dest.VetStaff, opt => opt.Ignore());
 
-        CreateMap<Company, CompanyModel>();
+        CreateMap<Company, CompanyModel>().ReverseMap();
+
+        CreateMap<User, UserDetailModel>()
+            .ForMember(dest => dest.Vet, opt => opt.MapFrom(src => src.VetProfile))
+            .ForMember(dest => dest.VetStaff, opt => opt.MapFrom(src => src.VetStaffProfile))
+            .ForMember(dest => dest.PetOwner, opt => opt.MapFrom(src => src.PetOwnerProfile))
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+            .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+            .ReverseMap();
     }
 }

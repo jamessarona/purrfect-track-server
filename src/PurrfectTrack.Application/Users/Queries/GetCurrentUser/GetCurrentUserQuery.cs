@@ -13,4 +13,4 @@ namespace PurrfectTrack.Application.Users.Queries.GetCurrentUser;
 
 public record GetCurrentUserQuery : IQuery<GetCurrentUserResult>;
 
-public record GetCurrentUserResult(UserModel User);
+public record GetCurrentUserResult(UserDetailModel UserDetail);

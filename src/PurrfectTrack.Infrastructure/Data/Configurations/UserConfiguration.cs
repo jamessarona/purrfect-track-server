@@ -29,7 +29,6 @@ class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(200);
 
         builder.Property(u => u.Role)
-            .HasConversion<string>()
             .IsRequired();
 
         builder.Property(u => u.IsActive)

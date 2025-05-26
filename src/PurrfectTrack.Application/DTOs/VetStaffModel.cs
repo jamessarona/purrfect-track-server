@@ -17,4 +17,6 @@ public class VetStaffModel : ContactModel
     public string? Department { get; set; }
     public DateTime? EmploymentDate { get; set; }
     public Guid? CompanyId { get; set; }
+
+    public CompanyModel? Company { get; set; }
 }

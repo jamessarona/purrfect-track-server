@@ -35,4 +35,5 @@ global using PurrfectTrack.Shared.Pagination;
 global using PurrfectTrack.Shared.Security;
 global using System.ComponentModel.DataAnnotations;
 global using System.Reflection;
+global using System.Security.Claims;
 global using System.Security.Cryptography;
