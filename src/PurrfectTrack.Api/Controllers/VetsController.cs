@@ -78,4 +78,17 @@ public class VetsController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("{id:guid}/upload-image")]
+    [Authorize(Roles = "Administrator,Vet")]
+    public async Task<IActionResult> UploadVetImage(Guid id, [FromForm] IFormFile file, CancellationToken cancellationToken)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Image file is required.");
+
+        var command = new UploadVetImageCommand(id, file);
+        var result = await _mediator.Send(command, cancellationToken);
+
+        return Ok(result);
+    }
 }
