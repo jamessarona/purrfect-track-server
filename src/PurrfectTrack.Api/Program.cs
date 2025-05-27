@@ -23,7 +23,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services
     .AddApplicationServices(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration)  
+    .AddInfrastructureServices(builder.Configuration)
     .AddApiServices(builder.Configuration);
 
 var app = builder.Build();
@@ -36,10 +36,12 @@ if (modGate.IsSystemLocked())
 }
 
 // Configure the HTTP request pipeline.
-app.UseApiServices();
+app.UseCors("AllowPurrfectTrackClient");
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication();  
+app.UseAuthorization();   
+
+app.UseApiServices();     
 
 if (app.Environment.IsDevelopment())
 {

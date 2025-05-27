@@ -38,12 +38,12 @@ public static class DependencyInjection
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAll", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            });
+            options.AddPolicy("AllowPurrfectTrackClient",
+                builder => builder
+                    .WithOrigins("http://localhost:4200") 
+                    .AllowCredentials()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
         });
 
         return services;
@@ -60,8 +60,8 @@ public static class DependencyInjection
             {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
-
-        app.UseCors("AllowAll");
+        
+        app.UseCors("AllowPurrfectTrackClient");
 
         app.MapControllers();
 

@@ -11,7 +11,6 @@
 
 namespace PurrfectTrack.Api.Controllers;
 
-
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -33,10 +32,13 @@ public class AuthController : ControllerBase
         {
             HttpOnly = true,
             Secure = true,
-            Expires = DateTime.UtcNow.AddMinutes(command.RememberMe ? 60 * 24 * 30 : 60),
-            SameSite = SameSiteMode.Strict,
-            Path = "/"
+            SameSite = SameSiteMode.None,
+            Path = "/",
+            IsEssential = true
         };
+
+        if (command.RememberMe) 
+            cookieOptions.Expires = DateTime.UtcNow.AddDays(30); 
 
         Response.Cookies.Append("access_token", result.Token, cookieOptions);
         Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
@@ -51,11 +53,19 @@ public class AuthController : ControllerBase
         if (string.IsNullOrEmpty(token))
             return BadRequest("Authorization token is missing");
 
-        var logoutCommand = new LogoutCommand(token);
-        await _mediator.Send(logoutCommand);
+        await _mediator.Send(new LogoutCommand(token));
 
-        Response.Cookies.Delete("access_token");
-        Response.Cookies.Delete("refresh_token");
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Path = "/",
+            IsEssential = true
+        };
+
+        Response.Cookies.Delete("access_token", cookieOptions);
+        Response.Cookies.Delete("refresh_token", cookieOptions);
 
         return NoContent();
     }
@@ -74,7 +84,9 @@ public class AuthController : ControllerBase
         {
             HttpOnly = true,
             Secure = true,
-            SameSite = SameSiteMode.Strict,
+            SameSite = SameSiteMode.None,
+            Path = "/",
+            IsEssential = true,
             Expires = result.RefreshTokenExpiresAt
         };
 
@@ -82,5 +94,12 @@ public class AuthController : ControllerBase
         Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
 
         return Ok(new { Success = true });
+    }
+
+    [HttpGet("session")]
+    [Authorize]
+    public IActionResult CheckSession()
+    {
+        return Ok(new { message = "Session valid" });
     }
 }

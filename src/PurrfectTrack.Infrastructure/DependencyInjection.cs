@@ -37,8 +37,8 @@ public static class DependencyInjection
 
         services.AddScoped<IImageStorageService, ImageStorageService>();
 
-        services.AddAuthentication("Bearer")
-            .AddJwtBearer("Bearer", options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
                 options.Events = new JwtBearerEvents
                 {
