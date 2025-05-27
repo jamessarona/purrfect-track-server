@@ -15,6 +15,13 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddAuthorization(options =>
+        {
+            options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+        });
+
         services.AddAutoMapper(typeof(MappingProfile).Assembly);
         services.AddControllers();
         services.AddEndpointsApiExplorer();

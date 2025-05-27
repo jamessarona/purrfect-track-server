@@ -9,19 +9,17 @@
 //  Unauthorized copying or distribution is prohibited.
 // -----------------------------------------------------------------------------
 
-using PurrfectTrack.Domain.Entities;
-
 namespace PurrfectTrack.Application.Users.Queries.GetCurrentUser;
 
 public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentUserQuery, GetCurrentUserResult>
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ICurrentUserService _currentUserService;
     private readonly Dictionary<UserRole, Func<IQueryable<User>, IQueryable<User>>> _includeMap;
     
-    public GetCurrentUserHandler(IApplicationDbContext dbContext, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public GetCurrentUserHandler(IApplicationDbContext dbContext, IMapper mapper, ICurrentUserService currentUserService)
         : base(dbContext, mapper)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _currentUserService = currentUserService;
 
         _includeMap = new Dictionary<UserRole, Func<IQueryable<User>, IQueryable<User>>>
         {
@@ -33,7 +31,7 @@ public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentU
 
     public async Task<GetCurrentUserResult> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
     {
-        var currentUserId = GetCurrentUserIdFromClaims();
+        var currentUserId = _currentUserService.UserId;
 
         var userRole = await dbContext.Users
             .Where(u => u.Id == currentUserId)
@@ -58,21 +56,5 @@ public class GetCurrentUserHandler : BaseQueryHandler, IQueryHandler<GetCurrentU
         var userDetail = mapper.Map<UserDetailModel>(user);
 
         return new GetCurrentUserResult(userDetail);
-    }
-
-    private Guid GetCurrentUserIdFromClaims()
-    {
-        var user = _httpContextAccessor.HttpContext?.User;
-
-        if (user?.Identity?.IsAuthenticated != true)
-            throw new UnauthorizedAccessException("User is not authenticated.");
-        var userIdClaim =
-            user.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
-            user.FindFirst("sub")?.Value;
-
-        if (string.IsNullOrWhiteSpace(userIdClaim))
-            throw new UnauthorizedAccessException("User ID claim is missing.");
-
-        return Guid.Parse(userIdClaim);
     }
 }
