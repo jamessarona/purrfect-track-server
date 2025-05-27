@@ -19,6 +19,8 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 var modGate = app.Services.GetRequiredService<IModGate>();
 if (modGate.IsSystemLocked())
 {
