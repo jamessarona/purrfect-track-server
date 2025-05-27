@@ -21,7 +21,7 @@ public class Company : Entity<Guid>
     public string? Website { get; set; }
     public string? Address { get; set; }
     public string? TaxpayerId { get; set; }
-
+    public string? ImageUrl { get; set; }
     public bool IsActive { get; set; } = true;
 
     public ICollection<Vet> Vets { get; set; } = new List<Vet>();

@@ -42,6 +42,10 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(c => c.TaxpayerId)
             .HasMaxLength(50);
 
+        builder.Property(p => p.ImageUrl)
+            .IsRequired(false)
+            .HasMaxLength(500);
+
         builder.Property(c => c.IsActive)
             .HasDefaultValue(true);
 

@@ -21,4 +21,5 @@ public class CompanyModel
     public string? Website { get; set; }
     public string? Address { get; set; }
     public string? TaxpayerId { get; set; }
+    public string? ImageUrl { get; set; }
 }

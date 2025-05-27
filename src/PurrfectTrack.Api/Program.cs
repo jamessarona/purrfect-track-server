@@ -44,6 +44,10 @@ if (app.Environment.IsDevelopment())
 app.Run();
 
 
-// Run in Package Manager Console for Manual Migration Command
+// Run in Package Manager Console for Manual Initial Migration Command
 // Add-Migration InitialCreate -OutputDir Data/Migrations -Project PurrfectTrack.Infrastructure -StartupProject PurrfectTrack.Api
 // Update-Database
+
+// Run for Updating of Database
+// Add-Migration AddNewFieldToEntity -OutputDir Data/Migrations -Project PurrfectTrack.Infrastructure -StartupProject PurrfectTrack.Api
+// Update-Database -Project PurrfectTrack.Infrastructure -StartupProject PurrfectTrack.Api

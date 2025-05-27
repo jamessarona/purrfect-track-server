@@ -31,6 +31,7 @@ global using PurrfectTrack.Application.Appointments.Queries.GetAppointmentsByCom
 global using PurrfectTrack.Application.Companies.Commands.CreateCompany;
 global using PurrfectTrack.Application.Companies.Commands.DeleteCompany;
 global using PurrfectTrack.Application.Companies.Commands.UpdateCompany;
+global using PurrfectTrack.Application.Companies.Commands.UploadCompanyImage;
 global using PurrfectTrack.Application.Companies.Queries.GetCompanies;
 global using PurrfectTrack.Application.Companies.Queries.GetCompanyById;
 global using PurrfectTrack.Application.Mappings;
