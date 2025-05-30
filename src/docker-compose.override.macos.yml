@@ -1,6 +1,7 @@
 services:
   purrfecttrackdb:
     container_name: purrfecttrackdb
+    platform: linux/amd64
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=M@st3rk3y
@@ -9,19 +10,25 @@ services:
       - "1433:1433"
 
   purrfecttrack.api:
+    restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=purrfecttrackdb;Database=PurrfectTrackDb;User Id=sa;Password=M@st3rk3y;Encrypt=False;TrustServerCertificate=True
+
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/purrfecttrack.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=M@st3rk3y
+
     depends_on:
       - purrfecttrackdb
     ports:
       - "6010:8080"
       - "6060:8081"
+
     volumes:
       - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
       - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-      - ~/.aspnet/https:/home/app/.aspnet/https:ro
-      - ~/.aspnet/https:/root/.aspnet/https:ro
-# docker-compose -f docker-compose.yml -f docker-compose.override.macos.yml up -d --build
+      - ~/.aspnet/https:/https:ro
+
+# docker-compose -f docker-compose.yml -f docker-compose.override.macos.yml up -d
