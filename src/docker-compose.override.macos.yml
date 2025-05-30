@@ -30,5 +30,6 @@ services:
       - ~/.microsoft/usersecrets:/home/app/.microsoft/usersecrets:ro
       - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
       - ~/.aspnet/https:/https:ro
+      - ./PurrfectTrack.Api/wwwroot/uploads:/app/wwwroot/uploads
 
 # docker-compose -f docker-compose.yml -f docker-compose.override.macos.yml up -d

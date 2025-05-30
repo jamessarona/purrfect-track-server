@@ -1,3 +1,9 @@
-*
-!.gitignore
-!uploads/
+# Ignore everything inside uploads folder (all files and folders)
+wwwroot/uploads/**
+
+# But do NOT ignore any folders themselves (empty folders) and .gitkeep files
+!wwwroot/uploads/
+!wwwroot/uploads/**/
+
+# Do NOT ignore any .gitkeep files anywhere inside uploads folders
+!wwwroot/uploads/**/*.gitkeep

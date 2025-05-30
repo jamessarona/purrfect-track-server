@@ -26,10 +26,9 @@ public class ImageStorageService : IImageStorageService
 
     public async Task<string> SaveImageAsync(IFormFile file, string subFolder, CancellationToken cancellationToken = default)
     {
+        EnsureUploadDirectory(subFolder);
+
         var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", subFolder);
-
-        Directory.CreateDirectory(uploadsFolder);
-
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
         var filePath = Path.Combine(uploadsFolder, fileName);
 
@@ -37,5 +36,34 @@ public class ImageStorageService : IImageStorageService
         await file.CopyToAsync(stream, cancellationToken);
 
         return $"/uploads/{subFolder}/{fileName}";
+    }
+
+    private void EnsureUploadDirectory(string folder)
+    {
+        var path = Path.Combine(_env.WebRootPath, "uploads", folder);
+        Directory.CreateDirectory(path);
+
+        if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux())
+        {
+            try
+            {
+                var chmod = new ProcessStartInfo
+                {
+                    FileName = "chmod",
+                    Arguments = $"-R 775 \"{path}\"",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using var process = Process.Start(chmod);
+                process?.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[WARN] Could not chmod uploads folder: {ex.Message}");
+            }
+        }
     }
 }

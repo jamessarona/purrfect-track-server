@@ -399,11 +399,8 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Ignore everything inside wwwroot recursively
-/src/PurrfectTrack.Api/wwwroot/**
+# Ignore everything inside uploads folder
+wwwroot/uploads/**
 
-# Except track these folders and their .gitignore files
-!src/PurrfectTrack.Api/wwwroot/
-!src/PurrfectTrack.Api/wwwroot/.gitignore
-!src/PurrfectTrack.Api/wwwroot/uploads/
-!src/PurrfectTrack.Api/wwwroot/uploads/.gitignore
+# But do not ignore any .gitkeep files inside uploads (this preserves folder structure)
+!wwwroot/uploads/**/*.gitkeep

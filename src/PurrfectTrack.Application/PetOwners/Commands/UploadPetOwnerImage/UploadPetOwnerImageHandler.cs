@@ -33,7 +33,7 @@ public class UploadPetOwnerImageHandler
         if (petOwner == null)
             throw new PetOwnerNotFoundException(command.PetOwnerId);
 
-        var imageUrl = await _imageService.SaveImageAsync(command.File, "petowners", cancellationToken);
+        var imageUrl = await _imageService.SaveImageAsync(command.File, "pet-owners", cancellationToken);
         petOwner.ImageUrl = imageUrl;
 
         await dbContext.SaveChangesAsync(cancellationToken);

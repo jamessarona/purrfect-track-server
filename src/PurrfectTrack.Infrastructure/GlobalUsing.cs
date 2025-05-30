@@ -33,6 +33,7 @@ global using PurrfectTrack.Infrastructure.Interceptors;
 global using PurrfectTrack.Infrastructure.Security;
 global using PurrfectTrack.Infrastructure.Services;
 global using PurrfectTrack.Shared.Security;
+global using System.Diagnostics;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Reflection;
 global using System.Security.Claims;

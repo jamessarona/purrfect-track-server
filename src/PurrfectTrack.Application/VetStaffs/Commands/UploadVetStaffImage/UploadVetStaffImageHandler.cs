@@ -32,7 +32,7 @@ public class UploadVetStaffImageHandler
         if (vetStaff == null)
             throw new VetStaffNotFoundException(command.VetStaffId);
 
-        var imageUrl = await _imageService.SaveImageAsync(command.File, "vetStaffs", cancellationToken);
+        var imageUrl = await _imageService.SaveImageAsync(command.File, "vet-staffs", cancellationToken);
         vetStaff.ImageUrl = imageUrl;
 
         await dbContext.SaveChangesAsync(cancellationToken);
