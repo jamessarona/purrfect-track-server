@@ -16,10 +16,12 @@ namespace PurrfectTrack.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ISender _mediator;
+    private readonly IWebHostEnvironment _env;
 
-    public AuthController(ISender mediator)
+    public AuthController(ISender mediator, IWebHostEnvironment env)
     {
         _mediator = mediator;
+        _env = env;
     }
 
     [HttpPost("login")]
@@ -28,17 +30,7 @@ public class AuthController : ControllerBase
     {
         var result = await _mediator.Send(command);
 
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Path = "/",
-            IsEssential = true
-        };
-
-        if (command.RememberMe) 
-            cookieOptions.Expires = DateTime.UtcNow.AddDays(30); 
+        var cookieOptions = CreateCookieOptions(command.RememberMe);
 
         Response.Cookies.Append("access_token", result.Token, cookieOptions);
         Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
@@ -55,14 +47,7 @@ public class AuthController : ControllerBase
 
         await _mediator.Send(new LogoutCommand(token));
 
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Path = "/",
-            IsEssential = true
-        };
+        var cookieOptions = CreateCookieOptions();
 
         Response.Cookies.Delete("access_token", cookieOptions);
         Response.Cookies.Delete("refresh_token", cookieOptions);
@@ -80,15 +65,7 @@ public class AuthController : ControllerBase
 
         var result = await _mediator.Send(new RefreshTokenCommand(refreshToken));
 
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Path = "/",
-            IsEssential = true,
-            Expires = result.RefreshTokenExpiresAt
-        };
+        var cookieOptions = CreateCookieOptions(expires: result.RefreshTokenExpiresAt);
 
         Response.Cookies.Append("access_token", result.AccessToken, cookieOptions);
         Response.Cookies.Append("refresh_token", result.RefreshToken, cookieOptions);
@@ -102,4 +79,30 @@ public class AuthController : ControllerBase
     {
         return Ok(new { message = "Session valid" });
     }
+
+    private CookieOptions CreateCookieOptions(bool rememberMe = false, DateTimeOffset? expires = null)
+    {
+        var isDevelopment = _env.IsDevelopment();
+
+        var options = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = !isDevelopment,
+            SameSite = isDevelopment ? SameSiteMode.Lax : SameSiteMode.None,
+            Path = "/",
+            IsEssential = true
+        };
+
+        if (rememberMe && !expires.HasValue)
+        {
+            options.Expires = DateTime.UtcNow.AddDays(30);
+        }
+        else if (expires.HasValue)
+        {
+            options.Expires = expires.Value.UtcDateTime;
+        }
+
+        return options;
+    }
+
 }
